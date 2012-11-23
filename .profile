@@ -31,6 +31,42 @@ source ~/Dropbox/todo/todo_completion
 complete -F _todo t
 export TODOTXT_FINAL_FILTER='~/Dropbox/todo/filters/futureTasks'
 
+if [ ! -d "/Applications" ]; then
+  # enable color support of ls and also add handy aliases
+  if [ -x /usr/bin/dircolors ]; then
+      test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+      alias ls='ls --color=auto'
+      #alias dir='dir --color=auto'
+      #alias vdir='vdir --color=auto'
+
+      alias grep='grep --color=auto'
+      alias fgrep='fgrep --color=auto'
+      alias egrep='egrep --color=auto'
+  fi
+
+  # some more ls aliases
+  alias ll='ls -alF'
+  alias la='ls -A'
+  alias l='ls -CF'
+else
+  alias ls='ls -G'
+fi
+
+# More alias definitions.
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+fi
+
+# Fix the bash prompt to the first column - http://jonisalonen.com/2012/your-bash-prompt-needs-this/
+PS1="\[\033[G\]$PS1" 
+
 # Filename:      Custom promt
 # Maintainer:    Dave Vehrs (modified by Johan Adriaans)
 # Last Modified: 12 Jul 2005 13:29:40 by Dave Vehrs
@@ -161,6 +197,7 @@ function promptcmd () {
         if [ "${SESS_SRC}" == "(:0.0)" ]; then 
         PS1="${PS1}\[${COLOR_GREEN}\]\h"
         else 
+          if [ -f "/proc/${PPID}/cmdline" ]; then
             local parent_process=`cat /proc/${PPID}/cmdline`
             if [[ "$parent_process" == "in.rlogind*" ]]; then
                 PS1="${PS1}\[${COLOR_BROWN}\]\h"
@@ -169,6 +206,7 @@ function promptcmd () {
             else
                 PS1="${PS1}\[${COLOR_LIGHTRED}\]\h"
             fi
+          fi
         fi
     elif [[ "${SESS_SRC}" == "" ]]; then
         PS1="${PS1}\[${COLOR_GREEN}\]\h"
@@ -176,21 +214,25 @@ function promptcmd () {
         PS1="${PS1}\[${COLOR_RED}\]\h" 
     fi
 
-    # Detached tmux Sessions
-    local DTCHTMX=$(tmux list-sessions | grep -v '(attached)' | wc -l)
-    if [ ${DTCHTMX} -gt 2 ]; then
-        PS1="${PS1}\[${COLOR_RED}\][tmux:${DTCHTMX}]"
-    elif [ ${DTCHTMX} -gt 0 ]; then
-        PS1="${PS1}\[${COLOR_YELLOW}\][tmux:${DTCHTMX}]"
+    # Detached tmux Sessions (Not in OSX)
+    if [ ! -d "/Applications" ]; then
+      local DTCHTMX=$(tmux list-sessions | grep -v '(attached)' | wc -l)
+      if [ ${DTCHTMX} -gt 2 ]; then
+          PS1="${PS1}\[${COLOR_RED}\][tmux:${DTCHTMX}]"
+      elif [ ${DTCHTMX} -gt 0 ]; then
+          PS1="${PS1}\[${COLOR_YELLOW}\][tmux:${DTCHTMX}]"
+      fi
     fi
 
     # System load
-    local LOADAVG=$(cat /proc/loadavg | awk {'print $1 * 100'} | bc)
-    local LOADAVGSTR=$(cat /proc/loadavg | awk {'print $1'})
-    if [ ${LOADAVG} -gt 200 ]; then
-        PS1="${PS1}\[${COLOR_RED}\][loadavg:${LOADAVGSTR}]"
-    elif [ ${LOADAVG} -gt 80 ]; then
-        PS1="${PS1}\[${COLOR_YELLOW}\][loadavg:${LOADAVGSTR}]"
+    if [ -f "/proc/loadavg" ]; then
+      local LOADAVG=$(cat /proc/loadavg | awk {'print $1 * 100'} | bc)
+      local LOADAVGSTR=$(cat /proc/loadavg | awk {'print $1'})
+      if [ ${LOADAVG} -gt 200 ]; then
+          PS1="${PS1}\[${COLOR_RED}\][loadavg:${LOADAVGSTR}]"
+      elif [ ${LOADAVG} -gt 80 ]; then
+          PS1="${PS1}\[${COLOR_YELLOW}\][loadavg:${LOADAVGSTR}]"
+      fi
     fi
    
     # Backgrounded running jobs
@@ -282,8 +324,10 @@ function prompt_workingdir () {
 
 function load_prompt () {
     # Get PIDs
-    local parent_process=$(cat /proc/$PPID/cmdline | cut -d \. -f 1)
-    local my_process=$(cat /proc/$$/cmdline | cut -d \. -f 1)
+    if [ -f "/proc/$PPID/cmdline" ]; then
+      local parent_process=$(cat /proc/$PPID/cmdline | cut -d \. -f 1)
+      local my_process=$(cat /proc/$$/cmdline | cut -d \. -f 1)
+    fi
 
     if  [[ $parent_process == script* ]]; then
         PROMPT_COMMAND=""
