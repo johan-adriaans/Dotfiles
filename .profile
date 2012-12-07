@@ -23,6 +23,10 @@ fi
 export PATH=$HOME/local/node/bin:$PATH
 export NODE_PATH=$HOME/local/node:$HOME/local/node/lib/node_modules
 
+# Force xterm-color on ssh sessions
+alias ssh='TERM=xterm-color ssh' 
+alias irssi='TERM=screen-256color irssi'
+
 # TodoTxt tricks
 export PATH=~/Dropbox/todo:~/bin:$PATH
 export TODOTXT_DEFAULT_ACTION=pv
