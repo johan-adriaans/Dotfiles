@@ -27,11 +27,6 @@ fi
 export PATH=$HOME/local/node/bin:$PATH
 export NODE_PATH=$HOME/local/node:$HOME/local/node/lib/node_modules
 
-# Force xterm-color on ssh sessions
-alias ssh='TERM=xterm-color ssh' 
-alias irssi='TERM=screen-256color irssi'
-alias nagcon='TERM=screen-256color sudo nagcon -f /var/cache/nagios3/status.dat'
-
 # TodoTxt tricks
 export PATH=~/Dropbox/todo:~/bin:$PATH
 export TODOTXT_DEFAULT_ACTION=pv
@@ -352,4 +347,3 @@ function load_prompt () {
 }
 
 load_prompt
-
