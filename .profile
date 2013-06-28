@@ -31,6 +31,7 @@ export NODE_PATH=$HOME/local/node:$HOME/local/node/lib/node_modules
 alias ssh='TERM=xterm-color ssh' 
 alias irssi='TERM=screen-256color irssi'
 alias nagcon='TERM=screen-256color sudo nagcon -f /var/cache/nagios3/status.dat'
+#alias tmux="TERM=screen-256color-bce tmux"
 
 # TodoTxt tricks
 export PATH=~/Dropbox/todo:~/bin:$PATH
@@ -74,7 +75,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Fix the bash prompt to the first column - http://jonisalonen.com/2012/your-bash-prompt-needs-this/
-PS1="\[\033[G\]$PS1" 
+#PS1="\[\033[G\]$PS1" 
 
 # Filename:      Custom promt
 # Maintainer:    Dave Vehrs (modified by Johan Adriaans)
@@ -351,5 +352,8 @@ function load_prompt () {
     export PS1 PROMPT_COMMAND
 }
 
-load_prompt
+# If not running interactively, do not do anything
+[[ $- != *i* ]] && return
+[[ $TERM != screen* ]] && exec tmux -2 attach
 
+load_prompt
