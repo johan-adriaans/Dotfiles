@@ -3,16 +3,26 @@ set nocompatible                    " choose no compatibility with legacy vi
 filetype off                        " required by Vundle
 
 set rtp+=~/.vim/bundle/vundle/      " Vundle
-call vundle#rc()                    
+call vundle#rc()
 
 Bundle 'gmarik/vundle'
+Bundle 'L9'
+Bundle 'ervandew/supertab'
+Bundle 'mudpile45/vim-phpdoc'
+
+Bundle 'FuzzyFinder'
+let g:fuf_file_exclude = '\v\~$|\.(o|exe|dll|bak|orig|swp)$|(^|[/\\])\.(hg|git|bzr|svn)($|[/\\])'
+
+Bundle 'tobyS/vmustache'
+Bundle 'SirVer/ultisnips'
+Bundle 'tobyS/pdv'
+let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
+nnoremap <buffer> <C-d> :call pdv#DocumentWithSnip()<CR>
 
 filetype plugin indent on           " required by Vundle
-
 syntax enable
 set encoding=utf-8
 set showcmd                         " display incomplete commands
-filetype plugin indent on           " load file type plugins + indentation
 
 "" Whitespace
 set nowrap                          " don't wrap lines
@@ -29,6 +39,14 @@ set hlsearch                        " highlight matches
 set incsearch                       " incremental searching
 set ignorecase                      " searches are case insensitive...
 set smartcase                       " ... unless they contain at least one capital letter
+set tags=tags
+nnoremap <C-t> :FufTag<CR>
+nnoremap <C-p> :FufTaggedFile<CR>
+nnoremap <C-f> :FufFileWithCurrentBufferDir<CR>
+nnoremap <C-b> :FufBuffer<CR>
+
+" Open tag definition in vertical split
+nnoremap <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 "" Color Scheme
 colorscheme jellybeans
