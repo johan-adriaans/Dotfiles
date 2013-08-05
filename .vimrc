@@ -15,11 +15,12 @@ Bundle 'scrooloose/syntastic'
 Bundle 'FuzzyFinder'
 let g:fuf_file_exclude = '\v\~$|\.(o|exe|dll|bak|orig|swp)$|(^|[/\\])\.(hg|git|bzr|svn)($|[/\\])'
 
-Bundle 'tobyS/vmustache'
-Bundle 'SirVer/ultisnips'
-Bundle 'tobyS/pdv'
-let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
-nnoremap <buffer> <C-d> :call pdv#DocumentWithSnip()<CR>
+
+" Bundle 'tobyS/vmustache'
+" Bundle 'SirVer/ultisnips'
+" Bundle 'tobyS/pdv'
+" let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
+" nnoremap <buffer> <C-d> :call pdv#DocumentWithSnip()<CR>
 
 filetype plugin indent on           " required by Vundle
 syntax enable
@@ -48,7 +49,6 @@ set tags=tags                       " Autoload tags file
 nnoremap <C-t> :FufTag<CR>
 nnoremap <C-p> :FufTaggedFile<CR>
 nnoremap <C-f> :FufFileWithCurrentBufferDir<CR>
-nnoremap <C-b> :FufBuffer<CR>
 
 " Open tag definition in vertical split
 nnoremap <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
