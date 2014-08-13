@@ -1,4 +1,3 @@
-
 set nocompatible                    " choose no compatibility with legacy vi
 filetype off                        " required by Vundle
 
@@ -11,25 +10,11 @@ Bundle 'gmarik/vundle'
 " Needed by vundle
 Bundle 'L9'
 
-" Autocomplete with tab
-Bundle 'ervandew/supertab'
-
-" Smarty syntax
-Bundle 'vim-scripts/smarty.vim'
-
 " The PHP doc in vim doc format (shift-K in normal mode)
-
 Bundle 'mudpile45/vim-phpdoc'
+
 " support for LESS css files
 Bundle 'groenewege/vim-less'
-
-" Syntax check
-Bundle 'scrooloose/syntastic'
-
-"Bundle 'kingbin/vim-arduino'
-"
-" Bash ^n (like ^d in sublimetext)
-Bundle 'terryma/vim-multiple-cursors'
 
 " Nice looking toolbar at the bottom
 Bundle 'bling/vim-airline'
@@ -40,35 +25,24 @@ Bundle 'kien/ctrlp.vim'
 " Track SVN/Git changes in the sidebar
 Bundle 'mhinz/vim-signify'
 
-" Find files
-Bundle 'FuzzyFinder'
-
-" Snippets
-Bundle 'SirVer/ultisnips'
-
 " Latest netrw
 Bundle 'eiginn/netrw'
 
-let g:snips_author = "Johan Adriaans <johan@izi-services.nl>"
-let g:UltiSnipsEditSplit = "vertical"
+" Smarty syntax
+Bundle 'vim-scripts/smarty.vim'
 
-" Fuzzy finder excludes
-let g:fuf_file_exclude = '\v\~$|\.(o|exe|dll|bak|orig|swp)$|(^|[/\\])\.(hg|git|bzr|svn)($|[/\\])'
+" Syntax check
+" Bundle 'scrooloose/syntastic'
+
+" Arduino helper tools
+Bundle 'kingbin/vim-arduino'
 
 " Enable powerline fonts
 let g:airline_powerline_fonts = 1
 
-" Let Ctrl-p follow symlinks
-let g:ctrlp_follow_symlinks = 1
-
-" Bundle 'tobyS/vmustache'
-" Bundle 'SirVer/ultisnips'
-" Bundle 'tobyS/pdv'
-" let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
-" nnoremap <buffer> <C-d> :call pdv#DocumentWithSnip()<CR>
-
-filetype plugin indent on           " required by Vundle
+filetype plugin indent on
 syntax enable
+
 set encoding=utf-8
 set showcmd                         " display incomplete commands
 set cursorline                      " Highlight current line
@@ -79,10 +53,12 @@ set nowrap                          " don't wrap lines
 set tabstop=2 shiftwidth=2          " a tab is two spaces (or set this to 4)
 set expandtab                       " use spaces, not tabs (optional)
 set backspace=indent,eol,start      " backspace through everything in insert mode
+set textwidth=0
+set formatoptions-=t
+set foldmethod=manual
 
-"SWAGG
-set nopaste                         " setting good paste (past destroys supertab)
 set number                          " setting line numbers
+set splitright                      " Always open vertical splits to the right
 
 "" Searching
 set hlsearch                        " highlight matches
@@ -91,15 +67,48 @@ set ignorecase                      " searches are case insensitive...
 set smartcase                       " ... unless they contain at least one capital letter
 set tags=./tags;/                   " Autoload tags file
 
-"" FuzzySearch keys
-nnoremap <C-t> :FufTag<CR>
-"nnoremap <C-p> :FufTaggedFile<CR>
-nnoremap <C-f> :FufFileWithCurrentBufferDir<CR>
-
-" Open tag definition in vertical split
-"nnoremap <C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+"" Some sessions settings
+set ssop-=options    " do not store global and local values in a session
+set ssop-=folds      " do not store folds
 
 "" Color Scheme
 colorscheme jellybeans
 
 set laststatus=2                    " Always show the statusline
+
+" Map tab to ctrl-n
+imap <tab> <c-n>
+
+if &term =~ '^screen'
+  " tmux will send xterm-style keys when its xterm-keys option is on
+  execute "set <xUp>=\e[1;*A"
+  execute "set <xDown>=\e[1;*B"
+  execute "set <xRight>=\e[1;*C"
+  execute "set <xLeft>=\e[1;*D"
+
+  " Handle tmux $TERM quirks in vim
+  if $TERM =~ '^screen-256color'
+    map <Esc>OH <Home>
+    map! <Esc>OH <Home>
+    map <Esc>OF <End>
+    map! <Esc>OF <End>
+  endif
+endif
+
+" Have Vim jump to the last position when reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif
+
+" Expand %%/ to current/file/working/dir when in Ex mode
+cabbr <expr> %% expand('%:p:h')
+
+" Fix all XML files
+au FileType xml exe ":silent 1,$!xmllint --format --recover - 2>/dev/null"
+
+if has("autocmd")
+  let php_pipeline  = "perl -i -pe 's/ elseif / else if /g' --"
+  let php_pipeline .= " | astyle --indent-cases --pad-paren-in --pad-header --unpad-paren --keep-one-line-blocks --convert-tabs --indent=spaces=2"
+  let php_pipeline .= " | perl -i -pe 's/^([\s]+)([A-z]+\s?function .*){/$1$2\\n$1\\{/g' --"
+  autocmd FileType php let &formatprg=php_pipeline
+endif
