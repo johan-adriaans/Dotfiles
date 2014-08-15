@@ -127,7 +127,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# Start tmux if not in dumb terminal and not in OSX
-if [ ! -d "/Applications" ]; then
+# Start tmux if not in dumb terminal and on frits
+if [ "$(hostname)" == "frits" ]; then
   [[ $TERM != screen* ]] && [[ $TERM != dumb ]] && [[ $TERM != vt* ]] && exec tmux -2 attach
 fi
