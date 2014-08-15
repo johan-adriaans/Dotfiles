@@ -29,7 +29,7 @@ Bundle 'mhinz/vim-signify'
 Bundle 'eiginn/netrw'
 
 " Smarty syntax
-Bundle 'vim-scripts/smarty.vim'
+Bundle 'smarty.vim'
 
 " Syntax check
 " Bundle 'scrooloose/syntastic'
