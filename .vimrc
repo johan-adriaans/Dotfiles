@@ -26,7 +26,7 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'mhinz/vim-signify'
 
 " Latest netrw
-Bundle 'eiginn/netrw'
+" Bundle 'eiginn/netrw'
 
 " Smarty syntax
 Bundle 'smarty.vim'

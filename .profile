@@ -77,25 +77,6 @@ else # OSX
   alias ls='ls -G'
 fi
 
-# Colors:
-#COLOR_WHITE='\033[1;37m'
-#COLOR_LIGHTGRAY='033[0;37m'
-#COLOR_GRAY='\033[1;30m'
-#COLOR_BLACK='\033[0;30m'
-#COLOR_RED='\033[0;31m'
-#COLOR_LIGHTRED='\033[1;31m'
-#COLOR_GREEN='\033[0;32m'
-#COLOR_LIGHTGREEN='\033[1;32m'
-#COLOR_BROWN='\033[0;33m'
-#COLOR_YELLOW='\033[1;33m'
-#COLOR_BLUE='\033[0;34m'
-#COLOR_LIGHTBLUE='\033[1;34m'
-#COLOR_PURPLE='\033[0;35m'
-#COLOR_PINK='\033[1;35m'
-#COLOR_CYAN='\033[0;36m'
-#COLOR_LIGHTCYAN='\033[1;36m'
-#COLOR_DEFAULT='\033[0m'
-
 # Trim working dir to 1/4 the screen width
 function prompt_workingdir () {
   local pwdmaxlen=$(($COLUMNS/4))
@@ -117,8 +98,11 @@ case "$TERM" in
     *color) color_prompt=yes;;
 esac
 
+# Echo all supported colors
+#( x=`tput op` y=`printf %$((${COLUMNS}-6))s`;for i in {0..256};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done; )
+
 if [ "$color_prompt" = yes ]; then
-  PS1='\[\033[0;32m\]\u@\h\[\033[0m\]:\[\033[01;34m\]$(prompt_workingdir)\[\033[0m\]\$ '
+  PS1='$(tput setaf 2)\u@\h$(tput setaf 7):$(tput bold)$(tput setaf 4)$(prompt_workingdir)$(tput sgr0)$(tput setaf 7)\$ '
 else
   PS1='\u@\h:$(prompt_workingdir)\$ '
 fi
