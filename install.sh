@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR
 for file in $(ls -1a | grep "^\.[a-z][a-z\._-]\+$" ); do
-  if [ "file" == ".git" ]; then
+  if [ "$file" == ".git" ]; then
     continue
   fi
   if [ -f "$HOME/$file" ] || [ -h "$HOME/$file" ] || [ -d "$HOME/$file" ]
