@@ -4,6 +4,10 @@
 # Set my umask
 umask 0002
 
+# Shiny colors
+[[ $TERM == screen* ]] && export TERM=screen-256color
+[[ $TERM == xterm* ]] && export TERM=xterm-256color
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
