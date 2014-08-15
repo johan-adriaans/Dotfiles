@@ -20,8 +20,8 @@ alias l='ls -CF'
 
 # Force xterm-color on ssh sessions
 alias ssh='TERM=xterm-color ssh'
-alias vi='DISPLAY= ~/bin/vim' # Disable X11 mouse support and force my own vim
-alias vim='DISPLAY= ~/bin/vim' # Disable X11 mouse support and force my own vim
+alias vi='DISPLAY= vim' # Disable X11 mouse support
+alias vim='DISPLAY= vim' # Disable X11 mouse support
 alias irssi='TERM=screen-256color irssi'
 alias nagcon='TERM=screen-256color sudo nagcon -f /var/cache/nagios3/status.dat'
 alias alpine='alpine -p "{kantoor.izi-services.nl:993/user=johan/ssl}remote_pinerc"'
