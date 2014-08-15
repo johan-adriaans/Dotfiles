@@ -20,3 +20,10 @@ for file in $(ls -1a | grep "^\.[a-z][a-z\._-]\+$" ); do
     ln -s $DIR/$file $HOME/$file
   fi
 done
+
+echo -n "Want to install all vim plugins using Vundle? (y/n): "
+read response
+if [ "$response" == "y" ]
+then
+  vim +BundleInstall
+fi
