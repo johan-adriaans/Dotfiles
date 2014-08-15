@@ -3,7 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR
-for file in $(ls -1a | grep "^\.[a-z\._]\+$" ); do
+for file in $(ls -1a | grep "^\.[a-z][a-z\.-_]\+$" ); do
   if [ -f "$HOME/$file" ] || [ -h "$HOME/$file" ] || [ -d "$HOME/$file" ]
   then
     echo -n "$HOME/$file already exists, do you want to overwrite? (y/n): "
