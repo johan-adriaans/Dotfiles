@@ -1,3 +1,5 @@
 [user]
 	email = johan@izi-services.nl
 	name = Johan Adriaans
+[push]
+	default = matching
