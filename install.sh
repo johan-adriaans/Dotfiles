@@ -9,7 +9,7 @@ for file in $(ls -1a | grep "^\.[a-z][a-z\._-]\+$" ); do
   fi
   if [ -f "$HOME/$file" ] || [ -h "$HOME/$file" ] || [ -d "$HOME/$file" ]
   then
-    echo -n "$HOME/$file already exists, do you want to overwrite? (y/n): "
+    echo -n "$HOME/$file already exists. do you want to overwrite? this will remove the existing file or folder. (y/n): "
     read response
     if [ "$response" == "y" ]
     then
