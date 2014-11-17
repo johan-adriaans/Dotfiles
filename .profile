@@ -58,8 +58,12 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 # Node path settings
-export PATH=$HOME/local/node/bin:$PATH
+export PATH=$HOME/local/node/bin:/usr/local/share/npm/bin:$PATH
 export NODE_PATH=$HOME/local/node:$HOME/local/node/lib/node_modules
+
+# Android SDK settings
+export ANDROID_HOME="$HOME/share/adt-bundle"
+export PATH=${PATH}:$HOME/share/adt-bundle/tools:$HOME/share/adt-bundle/platform-tools
 
 # !OSX
 if [ ! -d "/Applications" ]; then
@@ -102,7 +106,7 @@ esac
 #( x=`tput op` y=`printf %$((${COLUMNS}-6))s`;for i in {0..256};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done; )
 
 if [ "$color_prompt" = yes ]; then
-  PS1='$(tput setaf 2)\u@\h$(tput setaf 7):$(tput bold)$(tput setaf 4)$(prompt_workingdir)$(tput sgr0)$(tput setaf 7)\$ '
+  PS1='\[$(tput setaf 2)\]\u@\h\[$(tput setaf 7)\]:\[$(tput bold)\]\[$(tput setaf 4)\]$(prompt_workingdir)\[$(tput sgr0)\]\[$(tput setaf 7)\]\$ '
 else
   PS1='\u@\h:$(prompt_workingdir)\$ '
 fi
