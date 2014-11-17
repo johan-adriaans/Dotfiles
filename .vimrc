@@ -40,6 +40,9 @@ Bundle 'kingbin/vim-arduino'
 " Enable powerline fonts
 let g:airline_powerline_fonts = 1
 
+" Force ctrlP to keep inital workingdir
+let g:ctrlp_working_path_mode=0
+
 filetype plugin indent on
 syntax enable
 
@@ -75,6 +78,10 @@ set ssop-=folds      " do not store folds
 colorscheme jellybeans
 
 set laststatus=2                    " Always show the statusline
+set wrap                            " Enable line wrapping
+set breakindent                     " Every wrapped line will continue visually indented (>7.4.338)
+set showbreak=\ \ ↪\                    " Indentation character
+set linebreak                       " Don't break words
 
 " Map tab to ctrl-n
 imap <tab> <c-n>
