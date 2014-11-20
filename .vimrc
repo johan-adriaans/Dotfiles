@@ -52,7 +52,6 @@ set cursorline                      " Highlight current line
 set lazyredraw                      " For responsive scrolling
 
 "" Whitespace
-set nowrap                          " don't wrap lines
 set tabstop=2 shiftwidth=2          " a tab is two spaces (or set this to 4)
 set expandtab                       " use spaces, not tabs (optional)
 set backspace=indent,eol,start      " backspace through everything in insert mode
@@ -80,7 +79,7 @@ colorscheme jellybeans
 set laststatus=2                    " Always show the statusline
 set wrap                            " Enable line wrapping
 set breakindent                     " Every wrapped line will continue visually indented (>7.4.338)
-set showbreak=\ \ ↪\                    " Indentation character
+set showbreak=\ \ ↪\                " Indentation character
 set linebreak                       " Don't break words
 
 " Map tab to ctrl-n
