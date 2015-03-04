@@ -43,6 +43,9 @@ let g:airline_powerline_fonts = 1
 " Force ctrlP to keep inital workingdir
 let g:ctrlp_working_path_mode=0
 
+" Let ctrlP search tags
+let g:ctrlp_extensions = ['tag']
+
 filetype plugin indent on
 syntax enable
 
@@ -84,6 +87,9 @@ set linebreak                       " Don't break words
 
 " Map tab to ctrl-n
 imap <tab> <c-n>
+
+" format JSON
+map <Leader>j :%!python -m json.tool<CR>
 
 if &term =~ '^screen'
   " tmux will send xterm-style keys when its xterm-keys option is on

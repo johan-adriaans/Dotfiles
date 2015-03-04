@@ -30,6 +30,11 @@ alias irssi='TERM=screen-256color irssi'
 alias nagcon='TERM=screen-256color sudo nagcon -f /var/cache/nagios3/status.dat'
 alias alpine='alpine -p "{kantoor.izi-services.nl:993/user=johan/ssl}remote_pinerc"'
 
+# My locale settings
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 # Make c-w recognize words
 stty werase undef
 bind '\C-w:unix-filename-rubout'
