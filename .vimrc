@@ -34,12 +34,11 @@ Bundle 'smarty.vim'
 " Syntax check
 Bundle 'scrooloose/syntastic'
 
+"Bundle 'extempore'
+
 " Arduino helper tools
 "Bundle 'kingbin/vim-arduino'
-
-" Siplenote plugin
-Bundle 'mrtazz/simplenote.vim'
-source ~/.simplenoterc
+"Plugin 'sudar/vim-arduino-syntax'
 
 " Enable powerline fonts
 let g:airline_powerline_fonts = 1
@@ -49,6 +48,8 @@ let g:ctrlp_working_path_mode=0
 
 " Let ctrlP search tags
 let g:ctrlp_extensions = ['tag']
+
+set guifont=Droid\ Sans\ Mono\ for\ Powerline:h14 
 
 filetype plugin indent on
 syntax enable
