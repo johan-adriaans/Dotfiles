@@ -4,6 +4,13 @@
 # Set my umask
 umask 0002
 
+# Cache $DISPLAY value so we can use it later (X11 forwards)
+if [ -z "$STY" -a -z "$TMUX" ]; then
+  echo $DISPLAY > ~/.display.txt
+else
+  export DISPLAY=`cat ~/.display.txt`
+fi
+
 # Shiny colors
 [[ $TERM == screen* ]] && export TERM=screen-256color
 [[ $TERM == xterm* ]] && export TERM=xterm-256color
@@ -115,7 +122,7 @@ if [ "$color_prompt" = yes ]; then
 else
   PS1='\u@\h:$(prompt_workingdir)\$ '
 fi
-unset color_prompt force_color_prompt
+unset color_prompt
 
 # Fix the bash prompt to the first column - http://jonisalonen.com/2012/your-bash-prompt-needs-this/
 PS1="\[\033[G\]$PS1" 

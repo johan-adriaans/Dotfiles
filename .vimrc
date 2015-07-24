@@ -32,10 +32,14 @@ Bundle 'mhinz/vim-signify'
 Bundle 'smarty.vim'
 
 " Syntax check
-" Bundle 'scrooloose/syntastic'
+Bundle 'scrooloose/syntastic'
 
 " Arduino helper tools
-Bundle 'kingbin/vim-arduino'
+"Bundle 'kingbin/vim-arduino'
+
+" Siplenote plugin
+Bundle 'mrtazz/simplenote.vim'
+source ~/.simplenoterc
 
 " Enable powerline fonts
 let g:airline_powerline_fonts = 1
@@ -76,9 +80,6 @@ set tags=./tags;/                   " Autoload tags file
 set ssop-=options    " do not store global and local values in a session
 set ssop-=folds      " do not store folds
 
-"" Color Scheme
-colorscheme jellybeans
-
 set laststatus=2                    " Always show the statusline
 set wrap                            " Enable line wrapping
 set breakindent                     " Every wrapped line will continue visually indented (>7.4.338)
@@ -90,6 +91,11 @@ imap <tab> <c-n>
 
 " format JSON
 map <Leader>j :%!python -m json.tool<CR>
+map <Leader>x :silent 1,$!xmllint --format --recover - 2>/dev/null<CR>
+
+"" Color Scheme
+colorscheme jellybeans
+highlight Normal ctermbg=none
 
 if &term =~ '^screen'
   " tmux will send xterm-style keys when its xterm-keys option is on
@@ -116,10 +122,10 @@ endif
 cabbr <expr> %% expand('%:p:h')
 
 " Fix all XML files
-au FileType xml exe ":silent 1,$!xmllint --format --recover - 2>/dev/null"
+"au FileType xml exe ":silent 1,$!xmllint --format --recover - 2>/dev/null"
 
 if has("autocmd")
-  let php_pipeline  = "perl -i -pe 's/ elseif / else if /g' --"
+  let php_pipeline  = "LANG=C perl -i -pe 's/ elseif / else if /g' --"
   let php_pipeline .= " | astyle --indent-cases --pad-paren-in --pad-header --unpad-paren --keep-one-line-blocks --convert-tabs --indent=spaces=2"
   let php_pipeline .= " | perl -i -pe 's/^([\s]+)([A-z]+\s?function .*){/$1$2\\n$1\\{/g' --"
   autocmd FileType php let &formatprg=php_pipeline
