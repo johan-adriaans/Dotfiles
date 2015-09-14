@@ -4,6 +4,20 @@
 # Set my umask
 umask 0002
 
+# Find Dotfiles folder
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+GIT_PS1_SHOWCOLORHINTS=1
+GIT_PS1_SHOWDIRTYSTATE=1
+
+# Load git prompt support
+source $DIR/git-prompt.sh
+
 # Cache $DISPLAY value so we can use it later (X11 forwards)
 if [ -z "$STY" -a -z "$TMUX" ]; then
   echo $DISPLAY > ~/.display.txt
@@ -119,9 +133,9 @@ esac
 #( x=`tput op` y=`printf %$((${COLUMNS}-6))s`;for i in {0..256};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done; )
 
 if [ "$color_prompt" = yes ]; then
-  PS1='\[$(tput setaf 2)\]\u@\h\[$(tput setaf 7)\]:\[$(tput bold)\]\[$(tput setaf 4)\]$(prompt_workingdir)\[$(tput sgr0)\]\[$(tput setaf 7)\]\$ '
+  PS1='\[$(tput setaf 2)\]\u@\h\[$(tput setaf 7)\]:\[$(tput bold)\]\[$(tput setaf 4)\]$(prompt_workingdir)\[$(tput sgr0)\]\[$(tput setaf 7)\]\[$(tput setaf 5)\]$(__git_ps1 " (%s)")\[$(tput setaf 7)\]\$ '
 else
-  PS1='\u@\h:$(prompt_workingdir)\$ '
+  PS1='\u@\h:$(prompt_workingdir)$(__git_ps1 " (%s)")\$ '
 fi
 unset color_prompt
 

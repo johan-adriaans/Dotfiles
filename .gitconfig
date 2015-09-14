@@ -3,3 +3,7 @@
 	name = Johan Adriaans
 [push]
 	default = matching
+[alias]
+  st=status
+  stat=status
+  co=checkout

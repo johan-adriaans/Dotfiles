@@ -25,6 +25,9 @@ Bundle 'kien/ctrlp.vim'
 " Track SVN/Git changes in the sidebar
 Bundle 'mhinz/vim-signify'
 
+" Git fugitive
+Bundle 'tpope/vim-fugitive'
+
 " Latest netrw
 " Bundle 'eiginn/netrw'
 
@@ -42,6 +45,7 @@ Bundle 'scrooloose/syntastic'
 
 " Enable powerline fonts
 let g:airline_powerline_fonts = 1
+" let g:airline#extensions#tabline#enabled = 1
 
 " Force ctrlP to keep inital workingdir
 let g:ctrlp_working_path_mode=0
@@ -83,9 +87,12 @@ set ssop-=folds      " do not store folds
 
 set laststatus=2                    " Always show the statusline
 set wrap                            " Enable line wrapping
-set breakindent                     " Every wrapped line will continue visually indented (>7.4.338)
-set showbreak=\ \ ↪\                " Indentation character
-set linebreak                       " Don't break words
+
+if exists("&breakindent")
+  set breakindent                     " Every wrapped line will continue visually indented (>7.4.338)
+  set showbreak=\ \ ↪\                " Indentation character
+  set linebreak                       " Don't break words
+endif
 
 " Map tab to ctrl-n
 imap <tab> <c-n>
