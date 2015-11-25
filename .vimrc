@@ -34,6 +34,9 @@ Bundle 'tpope/vim-fugitive'
 " Smarty syntax
 Bundle 'smarty.vim'
 
+" Tagbar for code overview
+Bundle 'majutsushi/tagbar'
+
 " Syntax check
 Bundle 'scrooloose/syntastic'
 
@@ -70,7 +73,15 @@ set backspace=indent,eol,start      " backspace through everything in insert mod
 set textwidth=0
 set formatoptions-=t
 set foldmethod=manual
+set shortmess=atI                   " Improve [Press ENTER to continue] prompt messages
 
+" Map tab to ctrl-n
+imap <tab> <c-n>
+set wildmenu                          " Enable wildcard menu
+set wildmode=list:longest
+set title                             " Set window title for gvim etc
+
+set scrolloff=4                     " Window scroll offset. T o keep context while scrolling
 set number                          " setting line numbers
 set splitright                      " Always open vertical splits to the right
 
@@ -94,12 +105,14 @@ if exists("&breakindent")
   set linebreak                       " Don't break words
 endif
 
-" Map tab to ctrl-n
-imap <tab> <c-n>
-
 " format JSON
 map <Leader>j :%!python -m json.tool<CR>
+
+" format XML
 map <Leader>x :silent 1,$!xmllint --format --recover - 2>/dev/null<CR>
+
+" Toggle tag bar
+map <Leader>t :TagbarToggle<CR>
 
 "" Color Scheme
 colorscheme jellybeans
@@ -120,6 +133,15 @@ if &term =~ '^screen'
     map! <Esc>OF <End>
   endif
 endif
+
+" Enable grep searching with :grep findword
+set grepprg=grep\ -nir\ $*\ *
+
+" Enable matchit
+runtime macros/matchit.vim
+
+" Map jk to Esc in normal mode
+imap jk <Esc>
 
 " Have Vim jump to the last position when reopening a file
 if has("autocmd")
