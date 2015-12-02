@@ -32,7 +32,7 @@ Bundle 'tpope/vim-fugitive'
 " Bundle 'eiginn/netrw'
 
 " Smarty syntax
-Bundle 'smarty.vim'
+Bundle 'blueyed/smarty.vim'
 
 " Tagbar for code overview
 Bundle 'majutsushi/tagbar'

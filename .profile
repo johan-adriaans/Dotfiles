@@ -99,7 +99,7 @@ if [ ! -d "/Applications" ]; then
     shopt -s globstar
 else # OSX
   # Some OSX Specific paths
-  export PATH=/opt/local/bin:/opt/local/sbin:/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH
+  export PATH=$HOME/android/sdk/tools:$HOME/android/sdk/platform-tools:/opt/local/bin:/opt/local/sbin:/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH
 
   # SSH hosts in ~/.ssh/config autocomplete
   complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh
