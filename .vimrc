@@ -31,17 +31,19 @@ Bundle 'tpope/vim-fugitive'
 " Latest netrw
 " Bundle 'eiginn/netrw'
 
+"Plugin 'rust-lang/rust.vim'
+
 " Smarty syntax
 Bundle 'smarty.vim'
 
 " Syntax check
 Bundle 'scrooloose/syntastic'
 
-"Bundle 'extempore'
+Bundle 'extempore'
 
 " Arduino helper tools
-"Bundle 'kingbin/vim-arduino'
-"Plugin 'sudar/vim-arduino-syntax'
+Bundle 'kingbin/vim-arduino'
+Plugin 'sudar/vim-arduino-syntax'
 
 " Enable powerline fonts
 let g:airline_powerline_fonts = 1
@@ -53,7 +55,7 @@ let g:ctrlp_working_path_mode=0
 " Let ctrlP search tags
 let g:ctrlp_extensions = ['tag']
 
-set guifont=Droid\ Sans\ Mono\ for\ Powerline:h14 
+set guifont=Droid\ Sans\ Mono\ for\ Powerline:h14
 
 filetype plugin indent on
 syntax enable
@@ -97,13 +99,26 @@ endif
 " Map tab to ctrl-n
 imap <tab> <c-n>
 
-" format JSON
+"" format JSON
 map <Leader>j :%!python -m json.tool<CR>
+"" format XML
 map <Leader>x :silent 1,$!xmllint --format --recover - 2>/dev/null<CR>
 
 "" Color Scheme
 colorscheme jellybeans
 highlight Normal ctermbg=none
+
+"" Highlight unwanted spaces
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+"" Fix supposed memleak when matching too often
+if version >= 702
+    autocmd BufWinLeave * call clearmatches()
+endif
 
 if &term =~ '^screen'
   " tmux will send xterm-style keys when its xterm-keys option is on

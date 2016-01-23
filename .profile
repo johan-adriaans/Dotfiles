@@ -18,6 +18,12 @@ GIT_PS1_SHOWDIRTYSTATE=1
 # Load git prompt support
 source $DIR/git-prompt.sh
 
+export HOMEBREW_GITHUB_API_TOKEN="d9a44a49a51967cca6468aecfb7bc9da7654a5fb"
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+
+# Set bash to vi command line editing
+set -o vi
+
 # Cache $DISPLAY value so we can use it later (X11 forwards)
 if [ -z "$STY" -a -z "$TMUX" ]; then
   echo $DISPLAY > ~/.display.txt
@@ -79,9 +85,12 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+# Define path for GO
+export GOPATH=~/source/go
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
+    PATH="$HOME/bin:$HOME/bin/arm-toolchain/bin:$HOME/source/go/bin:$PATH"
 fi
 
 # Node path settings
@@ -153,3 +162,4 @@ fi
 if [ "$(hostname)" == "frits" ]; then
   [[ $TERM != screen* ]] && [[ $TERM != dumb ]] && [[ $TERM != vt* ]] && exec tmux -2 attach
 fi
+
