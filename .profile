@@ -18,9 +18,6 @@ GIT_PS1_SHOWDIRTYSTATE=1
 # Load git prompt support
 source $DIR/git-prompt.sh
 
-export HOMEBREW_GITHUB_API_TOKEN="d9a44a49a51967cca6468aecfb7bc9da7654a5fb"
-export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
-
 # Set bash to vi command line editing
 set -o vi
 
@@ -112,6 +109,9 @@ else # OSX
 
   # SSH hosts in ~/.ssh/config autocomplete
   complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh
+
+  export HOMEBREW_GITHUB_API_TOKEN="d9a44a49a51967cca6468aecfb7bc9da7654a5fb"
+  export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 
   # Pretty ls
   alias ls='ls -G'
