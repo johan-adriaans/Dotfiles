@@ -28,5 +28,7 @@ echo -n "Want to install all vim plugins using Vundle? (y/n): "
 read response
 if [ "$response" == "y" ]
 then
+  git submodule init
+  git submodule update
   vim +BundleInstall
 fi
