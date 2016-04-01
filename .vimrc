@@ -42,11 +42,15 @@ Bundle 'majutsushi/tagbar'
 " Syntax check
 Bundle 'scrooloose/syntastic'
 
-Bundle 'extempore'
+" Debugging
+Bundle 'brookhong/DBGPavim'
+
+" Bundle 'extempore'
+" Bundle 'extempore'
 
 " Arduino helper tools
-Bundle 'kingbin/vim-arduino'
-Plugin 'sudar/vim-arduino-syntax'
+" Bundle 'kingbin/vim-arduino'
+" Plugin 'sudar/vim-arduino-syntax'
 
 " Enable powerline fonts
 let g:airline_powerline_fonts = 1
@@ -78,7 +82,9 @@ set foldmethod=manual
 set shortmess=atI                   " Improve [Press ENTER to continue] prompt messages
 
 " Map tab to ctrl-n
-imap <tab> <c-n>
+imap <s-tab> <C-x><C-o>
+imap <tab> <C-n>
+
 set wildmenu                          " Enable wildcard menu
 set wildmode=list:longest
 set title                             " Set window title for gvim etc
@@ -107,7 +113,18 @@ if exists("&breakindent")
   set linebreak                       " Don't break words
 endif
 
-"" format JSON
+" Omnicompletion
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType smarty set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType less set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType c set omnifunc=ccomplete#Complete
+
+" format JSON
 map <Leader>j :%!python -m json.tool<CR>
 
 "" format XML
@@ -115,6 +132,10 @@ map <Leader>x :silent 1,$!xmllint --format --recover - 2>/dev/null<CR>
 
 " Toggle tag bar
 map <Leader>t :TagbarToggle<CR>
+
+" Edit vimrc
+map <Leader>v :vs ~/.vimrc<CR>
+map <Leader>V :source ~/.vimrc<CR>
 
 "" Color Scheme
 colorscheme jellybeans
@@ -154,8 +175,12 @@ set grepprg=grep\ -nir\ $*\ *
 " Enable matchit
 runtime macros/matchit.vim
 
-" Map jk to Esc in normal mode
-imap jk <Esc>
+" Map jj to Esc in normal mode
+imap jj <Esc>
+
+" Allow moving up/down like you expect in a wrapped line
+nmap j gj
+nmap k gk
 
 " Have Vim jump to the last position when reopening a file
 if has("autocmd")
