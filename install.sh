@@ -30,5 +30,5 @@ if [ "$response" == "y" ]
 then
   git submodule init
   git submodule update
-  vim +BundleInstall
+  vi +'BundleInstall | q'
 fi
