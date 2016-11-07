@@ -51,7 +51,7 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # Force xterm-color on ssh sessions
-alias ssh='TERM=xterm-color ssh'
+alias ssh='TERM=xterm-color LC_NO_TMUX=1 ssh'
 alias vi='DISPLAY= vim' # Disable X11 mouse support
 alias vim='DISPLAY= vim' # Disable X11 mouse support
 alias irssi='TERM=screen-256color irssi'

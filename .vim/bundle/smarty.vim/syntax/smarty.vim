@@ -1,9 +1,9 @@
 " Vim syntax file
 " Language:	Smarty Templates
-" Maintainer:	Manfred Stienstra manfred.stienstra@dwerg.net
-" Last Change:  Fri Apr 12 10:33:51 CEST 2002 
+" Maintainer:	Daniel Hahler, original: Manfred Stienstra manfred.stienstra@dwerg.net
+" Last Change:  Di 10 Jun 2014 15:09:10 CEST
 " Filenames:    *.tpl
-" URL:		http://www.dwerg.net/download/vim/smarty.vim
+" URL:		https://github.com/blueyed/smarty.vim
 
 " For version 5.x: Clear all syntax items
 " For version 6.x: Quit when a syntax file was already loaded
@@ -19,18 +19,24 @@ endif
 syn case ignore
 
 runtime! syntax/html.vim
-"syn cluster htmlPreproc add=smartyUnZone
+unlet b:current_syntax
+syn cluster htmlPreproc add=smartyZone add=smartyComment add=smartyEndTag
 
-syn keyword smartyTagName capture config_load include include_php
-syn keyword smartyTagName insert if elseif else ldelim rdelim literal
-syn keyword smartyTagName php section sectionelse foreach foreachelse
-syn keyword smartyTagName strip cycle config_load assign counter debug
-syn keyword smartyTagName eval fetch html_checkboxes html_image
-syn keyword smartyTagName html_options html_radios html_select_date
-syn keyword smartyTagName html_select_time html_table mailto
-syn keyword smartyTagName math popup popup_init textformat
+syn keyword smartyTagName contained capture config_load include include_php
+syn keyword smartyTagName contained insert ldelim rdelim literal
+syn keyword smartyTagName contained php
+syn keyword smartyTagName contained strip config_load assign debug
+syn keyword smartyTagName contained eval fetch html_checkboxes html_image
+syn keyword smartyTagName contained html_options html_radios html_select_date
+syn keyword smartyTagName contained html_select_time html_table mailto
+syn keyword smartyTagName contained math popup popup_init textformat
 
-syn keyword smartyInFunc ne eq == != > < >= <= === ! % 
+syn keyword smartyConditional contained if elseif else
+syn keyword smartyRepeat contained section sectionelse foreach foreachelse cycle counter
+
+syn cluster smartyTags add=smartyTagName add=smartyConditional add=smartyRepeat
+
+syn keyword smartyInFunc ne eq == != > < >= <= === ! %
 
 syn match smartyProperty contained "file="
 syn match smartyProperty contained "loop="
@@ -185,35 +191,47 @@ syn match smartyProperty contained "vauto="
 syn match smartyProperty contained "wrap_cut="
 
 
+" Number
+syn match smartyNumber "-\=\<\d\+\>" contained display
+syn match smartyNumber "\<0x\x\{1,8}\>"  contained display
+
+" Boolean
+syn keyword smartyBoolean contained true false
+
+" Operator
+syn match smartyOperator contained "||\|&&"
 
 
-syn match smartyConstant "\$smarty" 
+syn match smartyConstant contained "\$smarty"
 
-syn match smartyDollarSign      contained "\$"
+syn match smartyDollarSign      contained "\$" " nextgroup=smartyVariable
 syn match smartyMaybeDollarSign contained "\([^\\]\|\\\\\)\@<=\$"
 
-syn match smartyVariable      contained "\$\@<=\h\w*"
-syn match smartyVariable      contained "\(\$\h\w*\(\.\|\->\|\[.*\]\(\.\|\->\)\)\)\@<=\w*"
-syn match smartyMaybeVariable contained "\(\(^\|[^\\]\|\\\\\)\$\)\@<=\h\w*"
+syn match smartyVariable      contained "\$\@<=\(\h\w\{-}\(\.\|\->\|\[\w\{-}\]\(\.\|\->\)\)\)*\w*" contains=smartyGlue nextgroup=smartyFunctionArgs
 
+syn region smartyFunctionArgs contained matchgroup=Delimiter start="(" end=")" contains=@phpClConst
+syn match smartyMaybeVariable contained "\(\(^\|[^\\]\|\\\\\)\$\)\@<=\h\w*"
 
 syn match smartyEscapedVariable contained "\\$\h\w*"
 
-syn region smartyInBracket    matchgroup=Constant start=+\[+ end=+\]+ contains=smartyVariable contained
-syn region smartyInBacktick   matchgroup=Constant start=+\`+ end=+\`+ contains=smartyVariable contained
-syn region smartyStringDouble matchgroup=Constant start=+"+  end=+"+  contains=smartyMaybeVariable, smartyInBacktick, smartyMaybeDollarSign contained keepend
+syn region smartyInBracket    contained matchgroup=Constant start=+\[+ end=+\]+ contains=smartyVariable
+syn region smartyInBacktick   contained matchgroup=Constant start=+\`+ end=+\`+ contains=smartyVariable
+syn region smartyStringDouble contained matchgroup=Constant start=+"+  end=+"+  contains=smartyMaybeVariable, smartyInBacktick, smartyMaybeDollarSign keepend
 
-syn match smartyGlue "\.\|\->"
+syn match smartyGlue contained "\.\|\->"
 
 
-syn region smartyModifier  matchgroup=Statement start=+|+   end=+\ze:\|\>+
-syn region smartyParameter matchgroup=Statement start=+:+   end=+\s\|}+ contains=smartyVariable, smartyDollarSign, smartyGlue, smartyInBracket, smartyStringDouble
-syn region smartyZone     matchgroup=Statement   start="{"   end="}" contains=smartyParameter, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartyBlock, smartyTagName, smartyConstant, smartyInFunc
-syn region smartyComment  matchgroup=Comment   start="{\*" end="\*}"
+syn region smartyModifier  contained matchgroup=Statement start=+||\@!+      end=+\ze:\|\>+
+syn region smartyParameter contained matchgroup=Statement start=+:+          end=+\ze\(}\||\)+ contains=smartyVariable, smartyDollarSign, smartyGlue, smartyInBracket, smartyStringDouble contained
+syn region smartyZone                matchgroup=Statement start="{\s\{-}[a-z$]\@=" end="}" contains=smartyParameter, smartyProperty, smartyGlue, smartyModifier, smartyDollarSign, smartyInBracket, smartyStringDouble, smartyVariable, smartyString, smartyBlock, smartyTagName, smartyConstant, smartyInFunc, @smartyTags, smartyRepeat, smartyNumber, smartyBoolean, smartyOperator, smartyTodo
+syn region smartyEndTag   matchgroup=Statement start="{/"  end="}"  contains=@smartyTags
+syn region smartyComment  matchgroup=Comment   start="{\*" end="\*}" contains=smartyTodo
+
+syn keyword smartyTodo   contained FIXME NOTE TODO OPTIMIZE XXX
 
 syn region  htmlString   contained start=+"+ end=+"+ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc,smartyZone
 syn region  htmlString   contained start=+'+ end=+'+ contains=htmlSpecialChar,javaScriptExpression,@htmlPreproc,smartyZone
-  syn region htmlLink start="<a\>\_[^>]*\<href\>" end="</a>"me=e-4 contains=@Spell,htmlTag,htmlEndTag,htmlSpecialChar,htmlPreProc,htmlComment,javaScript,@htmlPreproc,smartyZone
+  " syn region htmlLink start="<a\>\_[^>]*\<href\>" end="</a>"me=e-4 contains=@Spell,htmlTag,htmlEndTag,htmlSpecialChar,htmlPreProc,htmlComment,javaScript,@htmlPreproc,smartyZone
 
 
 if version >= 508 || !exists("did_smarty_syn_inits")
@@ -238,8 +256,19 @@ if version >= 508 || !exists("did_smarty_syn_inits")
   HiLink smartyInBracket       PreProc
   HiLink smartyInBacktick      Statement
   HiLink smartyModifier        Special
+  HiLink smartyConditional     Conditional
+  HiLink smartyRepeat          Repeat
+  HiLink smartyBoolean         Boolean
+  HiLink smartyNumber          Number
+  HiLink smartyOperator        Operator
+  HiLink smartyTodo            Todo
   delcommand HiLink
-endif 
+endif
+
+
+" Match/delegate {php}..{/php} blocks.
+syn include syntax/php.vim
+syn region   phpRegion  matchgroup=Delimiter start="{php}" end="{/php}" contains=@phpClTop
 
 let b:current_syntax = "smarty"
 
