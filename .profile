@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
@@ -12,20 +13,22 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-GIT_PS1_SHOWCOLORHINTS=1
-GIT_PS1_SHOWDIRTYSTATE=1
+
+export GIT_PS1_SHOWCOLORHINTS=1
+export GIT_PS1_SHOWDIRTYSTATE=1
 
 # Load git prompt support
-source $DIR/git-prompt.sh
+. "$DIR/git-prompt.sh"
 
 # Set bash to vi command line editing
 set -o vi
 
 # Cache $DISPLAY value so we can use it later (X11 forwards)
-if [ -z "$STY" -a -z "$TMUX" ]; then
-  echo $DISPLAY > ~/.display.txt
+if [ -z "$STY" ] && [ -z "$TMUX" ]; then
+  echo "$DISPLAY" > ~/.display.txt
 else
-  export DISPLAY=`cat ~/.display.txt`
+  export DISPLAY
+  DISPLAY=$(cat ~/.display.txt)
 fi
 
 # Shiny colors
@@ -111,10 +114,11 @@ else # OSX
   complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh
 
   export HOMEBREW_GITHUB_API_TOKEN="d9a44a49a51967cca6468aecfb7bc9da7654a5fb"
-  export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+  export PATH
+  PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
 
-  # Pretty ls
-  alias ls='ls -G'
+  # Pretty ls (both coreutils and darwin version)
+  ls --color=auto &> /dev/null && alias ls='ls --color=auto' || alias ls='ls -G'
 fi
 
 # Trim working dir to 1/4 the screen width
@@ -130,7 +134,7 @@ function prompt_workingdir () {
     local pwdoffset=$(( ${#newPWD} - $pwdmaxlen + 3 ))
     newPWD="${trunc_symbol}${newPWD:$pwdoffset:$pwdmaxlen}"
   fi
-  echo $newPWD
+  echo "$newPWD"
 }
 
 # set a fancy prompt (non-color, unless we know we "want" color)

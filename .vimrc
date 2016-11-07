@@ -34,7 +34,7 @@ Bundle 'tpope/vim-fugitive'
 "Plugin 'rust-lang/rust.vim'
 
 " Smarty syntax
-Bundle 'blueyed/smarty.vim'
+" Bundle 'blueyed/smarty.vim'
 
 " Tagbar for code overview
 Bundle 'majutsushi/tagbar'
@@ -43,14 +43,13 @@ Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/syntastic'
 
 " Debugging
-Bundle 'brookhong/DBGPavim'
+"Bundle 'brookhong/DBGPavim'
 
 " Bundle 'extempore'
 " Bundle 'extempore'
 
 " Arduino helper tools
-" Bundle 'kingbin/vim-arduino'
-" Plugin 'sudar/vim-arduino-syntax'
+"Plugin 'sudar/vim-arduino-syntax'
 
 " Enable powerline fonts
 let g:airline_powerline_fonts = 1
@@ -152,6 +151,13 @@ autocmd BufWinLeave * call clearmatches()
 if version >= 702
     autocmd BufWinLeave * call clearmatches()
 endif
+
+"" No tabs2spaces for makefiles
+autocmd FileType make call VanillaTabs()
+function VanillaTabs()
+  setlocal noexpandtab
+  iunmap <tab>
+endfunction
 
 if &term =~ '^screen'
   " tmux will send xterm-style keys when its xterm-keys option is on
