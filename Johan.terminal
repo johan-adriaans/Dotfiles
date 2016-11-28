@@ -217,10 +217,14 @@
 	</data>
 	<key>VisualBell</key>
 	<false/>
+	<key>columnCount</key>
+	<integer>110</integer>
 	<key>keyMapBoundKeys</key>
 	<dict/>
 	<key>name</key>
 	<string>Johan</string>
+	<key>rowCount</key>
+	<integer>26</integer>
 	<key>shellExitAction</key>
 	<integer>1</integer>
 	<key>type</key>
