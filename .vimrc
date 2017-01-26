@@ -1,59 +1,47 @@
 set nocompatible                    " choose no compatibility with legacy vi
 filetype off                        " required by Vundle
 
-set rtp+=~/.vim/bundle/vundle/      " Vundle
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim/  " Vundle
+call vundle#begin()
 
-" Vim package manager
-Bundle 'gmarik/vundle'
-
-" Needed by vundle
-Bundle 'L9'
+" Vundle plugin manager
+Plugin 'gmarik/Vundle.vim'
+Plugin 'L9'
 
 " The PHP doc in vim doc format (shift-K in normal mode)
-Bundle 'mudpile45/vim-phpdoc'
+Plugin 'mudpile45/vim-phpdoc'
+
+" Automatic complete pop-up
+Plugin 'othree/vim-autocomplpop'
+
+" Automatic delimiter closing
+"Plugin 'Raimondi/delimitMate'
+
+" Generate PHP Doc comments
+Plugin 'sumpygump/php-documentor-vim'
+inoremap <C-i> <ESC>:call PhpDocSingle()<CR>i
+nnoremap <C-i> :call PhpDocSingle()<CR>
+vnoremap <C-i> :call PhpDocRange()<CR> 
+
+let g:pdv_cfg_Package = "IZICMS"
+let g:pdv_cfg_Version = "1.0"
+let g:pdv_cfg_Author = "Johan Adriaans <johan@izi-services.nl>"
+let g:pdv_cfg_Copyright = "Copyright (C) Shoppagina - All Rights Reserved"
+let g:pdv_cfg_License = "Proprietary and confidential"
+let g:pdv_cfg_ClassTags = ["package","author","copyright","license","version"]
 
 " support for LESS css files
-Bundle 'groenewege/vim-less'
+Plugin 'groenewege/vim-less'
 
 " Nice looking toolbar at the bottom
-Bundle 'bling/vim-airline'
-
-" Find files in current directory
-Bundle 'kien/ctrlp.vim'
-
-" Track SVN/Git changes in the sidebar
-Bundle 'mhinz/vim-signify'
-
-" Git fugitive
-Bundle 'tpope/vim-fugitive'
-
-" Latest netrw
-" Bundle 'eiginn/netrw'
-
-"Plugin 'rust-lang/rust.vim'
-
-" Smarty syntax
-" Bundle 'blueyed/smarty.vim'
-
-" Tagbar for code overview
-Bundle 'majutsushi/tagbar'
-
-" Syntax check
-Bundle 'scrooloose/syntastic'
-
-" Debugging
-"Bundle 'brookhong/DBGPavim'
-
-" Bundle 'extempore'
-" Bundle 'extempore'
-
-" Arduino helper tools
-"Plugin 'sudar/vim-arduino-syntax'
+Plugin 'bling/vim-airline'
 
 " Enable powerline fonts
 let g:airline_powerline_fonts = 1
 " let g:airline#extensions#tabline#enabled = 1
+
+" Find files in current directory
+Plugin 'kien/ctrlp.vim'
 
 " Force ctrlP to keep inital workingdir
 let g:ctrlp_working_path_mode=0
@@ -61,8 +49,41 @@ let g:ctrlp_working_path_mode=0
 " Let ctrlP search tags
 let g:ctrlp_extensions = ['tag']
 
+" Track SVN/Git changes in the sidebar
+Plugin 'mhinz/vim-signify'
+
+" Git fugitive
+Plugin 'tpope/vim-fugitive'
+
+" Tagbar for code overview
+Plugin 'majutsushi/tagbar'
+
+" Smarty indent
+Plugin 'blueyed/smarty.vim'
+
+" Syntax check
+Plugin 'scrooloose/syntastic'
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+let g:syntastic_javascript_checkers = ['eslint']
+
+" Debugging
+"Plugin 'brookhong/DBGPavim'
+
+" Arduino helper tools
+"Plugin 'sudar/vim-arduino-syntax'
+
+" Set font for gvim
 set guifont=Droid\ Sans\ Mono\ for\ Powerline:h14
 
+call vundle#end()                   " required by Vundle. No Plugin statements below this line
 filetype plugin indent on
 syntax enable
 
@@ -71,7 +92,7 @@ set showcmd                         " display incomplete commands
 set cursorline                      " Highlight current line
 set lazyredraw                      " For responsive scrolling
 
-"" Whitespace
+" Whitespace
 set tabstop=2 shiftwidth=2          " a tab is two spaces (or set this to 4)
 set expandtab                       " use spaces, not tabs (optional)
 set backspace=indent,eol,start      " backspace through everything in insert mode
@@ -84,9 +105,9 @@ set shortmess=atI                   " Improve [Press ENTER to continue] prompt m
 imap <s-tab> <C-x><C-o>
 imap <tab> <C-n>
 
-set wildmenu                          " Enable wildcard menu
+set wildmenu                        " Enable wildcard menu
 set wildmode=list:longest
-set title                             " Set window title for gvim etc
+set title                           " Set window title for gvim etc
 
 set scrolloff=4                     " Window scroll offset. T o keep context while scrolling
 set number                          " setting line numbers
@@ -100,16 +121,16 @@ set smartcase                       " ... unless they contain at least one capit
 set tags=./tags;/                   " Autoload tags file
 
 "" Some sessions settings
-set ssop-=options    " do not store global and local values in a session
-set ssop-=folds      " do not store folds
+set ssop-=options                   " do not store global and local values in a session
+set ssop-=folds                     " do not store folds
 
 set laststatus=2                    " Always show the statusline
 set wrap                            " Enable line wrapping
 
 if exists("&breakindent")
-  set breakindent                     " Every wrapped line will continue visually indented (>7.4.338)
-  set showbreak=\ \ ↪\                " Indentation character
-  set linebreak                       " Don't break words
+  set breakindent                   " Every wrapped line will continue visually indented (>7.4.338)
+  set showbreak=\ \ ↪\              " Indentation character
+  set linebreak                     " Don't break words
 endif
 
 " Omnicompletion
@@ -123,6 +144,9 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 
+" format PHP
+map <Leader>p mz:silent 1,$!phpcbf<CR> gg=G`z
+
 " format JSON
 map <Leader>j :%!python -m json.tool<CR>
 
@@ -131,6 +155,9 @@ map <Leader>x :silent 1,$!xmllint --format --recover - 2>/dev/null<CR>
 
 " Toggle tag bar
 map <Leader>t :TagbarToggle<CR>
+
+" Remove trailing spaces
+map <Leader>s :%s/\s\+$//g<CR>:%s/\t/  /g<CR>
 
 " Edit vimrc
 map <Leader>v :vs ~/.vimrc<CR>
@@ -178,8 +205,11 @@ endif
 " Enable grep searching with :grep findword
 set grepprg=grep\ -nir\ $*\ *
 
-" Enable matchit
+" Enable matchit (Extendend % matching for html tags)
 runtime macros/matchit.vim
+
+" Make PHP indent cases in switch statements
+let g:PHP_vintage_case_default_indent=1
 
 " Map jj to Esc in normal mode
 imap jj <Esc>
@@ -188,20 +218,13 @@ imap jj <Esc>
 nmap j gj
 nmap k gk
 
-" Have Vim jump to the last position when reopening a file
 if has("autocmd")
+  " Have Vim jump to the last position when reopening a file
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+  " Set PHP formatter
+  autocmd FileType php set formatprg=phpcbf
 endif
 
 " Expand %%/ to current/file/working/dir when in Ex mode
 cabbr <expr> %% expand('%:p:h')
-
-" Fix all XML files
-"au FileType xml exe ":silent 1,$!xmllint --format --recover - 2>/dev/null"
-
-if has("autocmd")
-  let php_pipeline  = "LANG=C perl -i -pe 's/ elseif / else if /g' --"
-  let php_pipeline .= " | astyle --indent-cases --pad-paren-in --pad-header --unpad-paren --keep-one-line-blocks --convert-tabs --indent=spaces=2"
-  let php_pipeline .= " | perl -i -pe 's/^([\s]+)([A-z]+\s?function .*){/$1$2\\n$1\\{/g' --"
-  autocmd FileType php let &formatprg=php_pipeline
-endif

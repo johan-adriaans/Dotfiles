@@ -49,6 +49,7 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias weather='curl http://wttr.in/utrecht'
 
 # Force xterm-color on ssh sessions
 alias ssh='TERM=xterm-color LC_NO_TMUX=1 ssh'
