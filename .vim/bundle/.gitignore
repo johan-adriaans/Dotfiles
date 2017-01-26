@@ -1,6 +1,4 @@
 *
-!vundle
-!vundle/**
-!smarty.vim
-!smarty.vim/**
+!Vundle.vim
+!Vundle.vim/**
 !.gitignore
