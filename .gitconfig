@@ -1,9 +1,14 @@
 [user]
 	email = johan@izi-services.nl
-	name = Johan Adriaans
+  name = Johan Adriaans
+  signingkey = 34003D83
 [push]
 	default = matching
 [alias]
   st=status
   stat=status
   co=checkout
+[commit]
+	gpgsign = true
+[gpg]
+	program = /usr/local/bin/gpg2
