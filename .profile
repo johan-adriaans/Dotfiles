@@ -164,10 +164,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Set gpg-agent as ssh-agent
-
-SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-export SSH_AUTH_SOCK
-ssh-add
+if [ -z "$SSH_AUTH_SOCK" ]; then
+  SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+  export SSH_AUTH_SOCK
+  ssh-add
+fi
 
 # Start tmux if not in dumb terminal and on frits
 if [ "$(hostname)" == "frits" ]; then
