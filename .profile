@@ -164,7 +164,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Set gpg-agent as ssh-agent
-if [ -z "$SSH_AUTH_SOCK" ]; then
+if [ -z "$SSH_AUTH_SOCK" ] || [[ "$SSH_AUTH_SOCK" = *com.apple.launchd* ]]; then
   SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
   export SSH_AUTH_SOCK
   ssh-add
