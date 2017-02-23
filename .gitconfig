@@ -1,7 +1,7 @@
 [user]
 	email = johan@izi-services.nl
   name = Johan Adriaans
-  signingkey = 34003D83
+  signingkey = F4DF4CDC34003D83
 [push]
 	default = matching
 [alias]
