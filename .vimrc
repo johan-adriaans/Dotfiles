@@ -17,11 +17,13 @@ Plugin 'othree/vim-autocomplpop'
 " Automatic delimiter closing
 "Plugin 'Raimondi/delimitMate'
 
+Plugin 'pangloss/vim-javascript'
+
 " Generate PHP Doc comments
 Plugin 'sumpygump/php-documentor-vim'
-inoremap <C-i> <ESC>:call PhpDocSingle()<CR>i
-nnoremap <C-i> :call PhpDocSingle()<CR>
-vnoremap <C-i> :call PhpDocRange()<CR> 
+inoremap <C-c> <ESC>:call PhpDocSingle()<CR>i
+nnoremap <C-c> :call PhpDocSingle()<CR>
+vnoremap <C-c> :call PhpDocRange()<CR> 
 
 let g:pdv_cfg_Package = "IZICMS"
 let g:pdv_cfg_Version = "1.0"
