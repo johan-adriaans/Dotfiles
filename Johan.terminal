@@ -220,7 +220,12 @@
 	<key>columnCount</key>
 	<integer>110</integer>
 	<key>keyMapBoundKeys</key>
-	<dict/>
+	<dict>
+		<key>F729</key>
+		<string>[H</string>
+		<key>F72B</key>
+		<string>[F</string>
+	</dict>
 	<key>name</key>
 	<string>Johan</string>
 	<key>rowCount</key>
@@ -229,5 +234,7 @@
 	<integer>1</integer>
 	<key>type</key>
 	<string>Window Settings</string>
+	<key>useOptionAsMetaKey</key>
+	<true/>
 </dict>
 </plist>
