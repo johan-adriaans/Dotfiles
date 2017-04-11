@@ -165,6 +165,7 @@ fi
 
 # Set gpg-agent as ssh-agent
 if [ -z "$SSH_AUTH_SOCK" ] || [[ "$SSH_AUTH_SOCK" = *com.apple.launchd* ]]; then
+  gpg2 -K &> /dev/null
   SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
   export SSH_AUTH_SOCK
   ssh-add

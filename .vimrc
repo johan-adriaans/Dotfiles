@@ -66,6 +66,9 @@ Plugin 'blueyed/smarty.vim'
 " Syntax check
 Plugin 'scrooloose/syntastic'
 
+" Gruvbox color scheme
+Plugin 'morhetz/gruvbox'
+
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -165,9 +168,10 @@ map <Leader>s :%s/\s\+$//g<CR>:%s/\t/  /g<CR>
 map <Leader>v :vs ~/.vimrc<CR>
 map <Leader>V :source ~/.vimrc<CR>
 
-"" Color Scheme
-colorscheme jellybeans
-highlight Normal ctermbg=none
+" Colorscheme
+colorscheme gruvbox
+set background=dark
+"highlight Normal ctermbg=none
 
 "" Highlight unwanted spaces
 highlight ExtraWhitespace ctermbg=red guibg=red
