@@ -23,7 +23,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'sumpygump/php-documentor-vim'
 inoremap <C-c> <ESC>:call PhpDocSingle()<CR>i
 nnoremap <C-c> :call PhpDocSingle()<CR>
-vnoremap <C-c> :call PhpDocRange()<CR> 
+vnoremap <C-c> :call PhpDocRange()<CR>
 
 let g:pdv_cfg_Package = "IZICMS"
 let g:pdv_cfg_Version = "1.0"
@@ -107,8 +107,8 @@ set foldmethod=manual
 set shortmess=atI                   " Improve [Press ENTER to continue] prompt messages
 
 " Map tab to ctrl-n
-imap <s-tab> <C-x><C-o>
-imap <tab> <C-n>
+" imap <s-tab> <C-x><C-o>
+" imap <tab> <C-n>
 
 set wildmenu                        " Enable wildcard menu
 set wildmode=list:longest
@@ -150,7 +150,7 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 
 " format PHP
-map <Leader>p mz:silent 1,$!phpcbf<CR> gg=G`z
+map <Leader>p mz:silent 1,$!phpcbf<CR> gg=G`zzz
 
 " format JSON
 map <Leader>j :%!python -m json.tool<CR>
@@ -192,21 +192,21 @@ function VanillaTabs()
   iunmap <tab>
 endfunction
 
-if &term =~ '^screen'
-  " tmux will send xterm-style keys when its xterm-keys option is on
-  execute "set <xUp>=\e[1;*A"
-  execute "set <xDown>=\e[1;*B"
-  execute "set <xRight>=\e[1;*C"
-  execute "set <xLeft>=\e[1;*D"
-
-  " Handle tmux $TERM quirks in vim
-  if $TERM =~ '^screen-256color'
-    map <Esc>OH <Home>
-    map! <Esc>OH <Home>
-    map <Esc>OF <End>
-    map! <Esc>OF <End>
-  endif
-endif
+" if &term =~ '^screen'
+"   " tmux will send xterm-style keys when its xterm-keys option is on
+"   execute "set <xUp>=\e[1;*A"
+"   execute "set <xDown>=\e[1;*B"
+"   execute "set <xRight>=\e[1;*C"
+"   execute "set <xLeft>=\e[1;*D"
+"
+"   " Handle tmux $TERM quirks in vim
+"   if $TERM =~ '^screen-256color'
+"     map <Esc>OH <Home>
+"     map! <Esc>OH <Home>
+"     map <Esc>OF <End>
+"     map! <Esc>OF <End>
+"   endif
+" endif
 
 " Enable grep searching with :grep findword
 set grepprg=grep\ -nir\ $*\ *
