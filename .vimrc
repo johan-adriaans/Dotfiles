@@ -14,9 +14,13 @@ Plugin 'mudpile45/vim-phpdoc'
 " Automatic complete pop-up
 Plugin 'othree/vim-autocomplpop'
 
+" Vim code intel
+Plugin 'nsf/gocode', {'rtp': 'vim/'}
+
 " Automatic delimiter closing
 "Plugin 'Raimondi/delimitMate'
 
+" JS
 Plugin 'pangloss/vim-javascript'
 
 " Generate PHP Doc comments
@@ -31,6 +35,9 @@ let g:pdv_cfg_Author = "Johan Adriaans <johan@izi-services.nl>"
 let g:pdv_cfg_Copyright = "Copyright (C) Shoppagina - All Rights Reserved"
 let g:pdv_cfg_License = "Proprietary and confidential"
 let g:pdv_cfg_ClassTags = ["package","author","copyright","license","version"]
+
+" Seamless tmux/vim navigation
+Plugin 'christoomey/vim-tmux-navigator'
 
 " support for LESS css files
 Plugin 'groenewege/vim-less'
@@ -65,6 +72,9 @@ Plugin 'blueyed/smarty.vim'
 
 " Syntax check
 Plugin 'scrooloose/syntastic'
+
+" Go development
+Plugin 'fatih/vim-go'
 
 " Gruvbox color scheme
 Plugin 'morhetz/gruvbox'
@@ -148,6 +158,7 @@ autocmd FileType less set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
+autocmd FileType go set omnifunc=gocomplete#Complete
 
 " format PHP
 map <Leader>p mz:silent 1,$!phpcbf<CR> gg=G`zzz
