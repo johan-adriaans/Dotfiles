@@ -14,12 +14,6 @@ Plugin 'mudpile45/vim-phpdoc'
 " Automatic complete pop-up
 Plugin 'othree/vim-autocomplpop'
 
-" Vim code intel
-Plugin 'nsf/gocode', {'rtp': 'vim/'}
-
-" Automatic delimiter closing
-"Plugin 'Raimondi/delimitMate'
-
 " JS
 Plugin 'pangloss/vim-javascript'
 
@@ -64,20 +58,22 @@ Plugin 'mhinz/vim-signify'
 " Git fugitive
 Plugin 'tpope/vim-fugitive'
 
-" Tagbar for code overview
+" Tagbar for code overview and the php-plugin
 Plugin 'majutsushi/tagbar'
+Plugin 'vim-php/tagbar-phpctags.vim'
 
 " Smarty indent
 Plugin 'blueyed/smarty.vim'
 
-" Syntax check
-Plugin 'scrooloose/syntastic'
-
-" Go development
+" Go development and code intel
 Plugin 'fatih/vim-go'
+"Plugin 'nsf/gocode', {'rtp': 'vim/'}
 
 " Gruvbox color scheme
 Plugin 'morhetz/gruvbox'
+
+" Syntax check
+Plugin 'scrooloose/syntastic'
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -95,12 +91,12 @@ let g:syntastic_javascript_checkers = ['eslint']
 " Arduino helper tools
 "Plugin 'sudar/vim-arduino-syntax'
 
-" Set font for gvim
-set guifont=Droid\ Sans\ Mono\ for\ Powerline:h14
-
 call vundle#end()                   " required by Vundle. No Plugin statements below this line
 filetype plugin indent on
 syntax enable
+
+" Set font for gvim
+set guifont=Droid\ Sans\ Mono\ for\ Powerline:h14
 
 set encoding=utf-8
 set showcmd                         " display incomplete commands
@@ -118,7 +114,7 @@ set shortmess=atI                   " Improve [Press ENTER to continue] prompt m
 
 " Map tab to ctrl-n
 " imap <s-tab> <C-x><C-o>
-" imap <tab> <C-n>
+imap <tab> <C-n>
 
 set wildmenu                        " Enable wildcard menu
 set wildmode=list:longest
