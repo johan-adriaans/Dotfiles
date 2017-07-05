@@ -171,6 +171,14 @@ if [ -z "$SSH_AUTH_SOCK" ] || [[ "$SSH_AUTH_SOCK" = *com.apple.launchd* ]]; then
   ssh-add
 fi
 
+# Fix SSH auth socket location so agent forwarding works with tmux
+if test "$SSH_AUTH_SOCK" && [[ $SSH_AUTH_SOCK != "$HOME/.ssh/ssh_auth_sock" ]]; then
+  ln -sf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
+fi
+if [ -e ~/.ssh/ssh_auth_sock ]; then
+  export SSH_AUTH_SOCK="$HOME/.ssh/ssh_auth_sock"
+fi
+
 # Start tmux if not in dumb terminal and on frits
 if [ "$(hostname)" == "frits" ]; then
   [[ $TERM != screen* ]] && [[ $TERM != dumb ]] && [[ $TERM != vt* ]] && exec tmux -2 attach
