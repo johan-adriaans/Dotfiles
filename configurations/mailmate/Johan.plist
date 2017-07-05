@@ -1,0 +1,80 @@
+{
+
+	/*
+	 * |         Keybindings           |
+	 * | Shortcut | Code | Description |
+	 * | -------- | ---- | ----------- |
+	 * | a        | a    | -           |
+	 * | ⌃ a      | ^a   | Control-a   |
+	 * | ⌥ a      | ~a   | Option-a    |
+	 * | ⇧ a      | A    | Shift-a     |
+	 * | ⌘ a      | @a   | Command-a   |
+	 */
+
+	/*
+   * Single keys
+	 */
+
+	"%"    = "newMessage:";
+	"/"    = "mailboxSearch:";
+	"^p"   = "searchAllMessages:";
+	"k"    = "previousThread:";
+	"j"    = "nextThread:";
+	"J"	   = "moveDownAndModifySelection:";
+	"K"	   = "moveUpAndModifySelection:";
+	"p"    = "previousMessage:";
+	"n"    = "nextMessage:";
+	"o"    = "openMessages:";
+  "l"    = "selectNextMailboxRow:";
+  "h"    = "selectPreviousMailboxRow:";
+	"u"    = "undo:";
+  "^r"   = "redo:";
+
+	"a"    = "archive:";
+  "A" = ( "mailboxSetTag:", "\\Seen" );
+  "E"    = ("moveThreadToMailbox:", "archive"); /* archive the entire thread */
+	"m"    = "markAsMuted:";
+	"s"    = "toggleFlag:";
+	"!"    = "moveToJunk:";
+	"r"    = "reply:";
+	"R"    = "replyAll:";
+	"f"    = "forwardMessage:";
+	"F"    = "forwardAsAttachment:";
+	"@s"   = "saveDocument:";
+	"d"    = "deleteMessage:";
+	"m"    = "moveToMailbox:";
+	"I"	   = ( "markAsRead:", "nextMessage:" );
+	"U"	   = "markAsUnRead:";
+
+	/*
+	 * Combo keys
+	 */
+
+	"g" = {
+		"a" = ( "goToMailbox:", "ALL_MESSAGES" );
+		"s" = ( "goToMailbox:", "FLAGGED" );
+		"d" = ( "goToMailbox:", "DRAFTS" );
+		"g" = "selectFirstMessageRow:";
+		"l" = "goToMailbox:";
+		"i" = ( "goToMailbox:", "INBOX" );
+		"t" = ( "goToMailbox:", "SENT" );
+		"m" = ( "goToMailbox:", "1D62C5DC-7660-4DB0-9B0D-F92EB41226E9" ); /* Goto smart mailbox, Unread. Obtain the UUID from  ~/Library/Application Support/MailMate/Mailboxes.plist */
+	};
+	"G" = "selectLastMessageRow:";
+
+	"*" = {
+		"a" = "selectAll:";                                             /* Selects all */
+		"n" = "deselectAll:";                                           /* Deselect all */
+		"r" = ( "selectWithFilter:", "#flags.flag = '\\Seen'" );        /* Selects all mail you've read. */
+		"u" = ( "selectWithFilter:", "#flags.flag !=[x] '\\Seen'" );    /* Selects all unread mail. */
+		"s" = ( "selectWithFilter:", "#flags.flag = '\\Flagged'" );     /* Selects all starred mail. */
+		"t" = ( "selectWithFilter:", "#flags.flag !=[x] '\\Flagged'" ); /* Selects all unstarred mail. */
+	};
+
+	/*
+   * Composing
+	 */
+
+	"@\U000A" = "send:"; // ⌘+return
+	"@\U000D" = "send:"; // ⌘+enter
+}
