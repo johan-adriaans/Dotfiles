@@ -162,7 +162,7 @@ autocmd FileType go set omnifunc=gocomplete#Complete
 
 "" Session saving
 map <silent> <F5> :mks! ~/.vim/session.vim<CR>
-map <silent> <F7> :source ~/.vim/session.vim<CR>  
+map <silent> <F9> :source ~/.vim/session.vim<CR>
 
 "" format PHP
 map <Leader>p mz:silent 1,$!phpcbf<CR> gg=G`zzz
