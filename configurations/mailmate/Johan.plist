@@ -16,8 +16,8 @@
 	 */
 
 	"%"    = "newMessage:";
-	"/"    = "mailboxSearch:";
-	"^p"   = "searchAllMessages:";
+/*"/"    = "mailboxSearch:";*/
+	"/"   = "searchAllMessages:";
 	"k"    = "previousThread:";
 	"j"    = "nextThread:";
 	"J"	   = "moveDownAndModifySelection:";
@@ -27,6 +27,8 @@
 	"o"    = "openMessages:";
   "l"    = "selectNextMailboxRow:";
   "h"    = "selectPreviousMailboxRow:";
+  "L"    = "selectNextCountedMailbox:";
+  "H"    = "selectPreviousCountedMailbox:";
 	"u"    = "undo:";
   "^r"   = "redo:";
 
