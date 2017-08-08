@@ -1,11 +1,12 @@
 module.exports = {
+  "extends": "eslint:recommended",
   "env": {
+    "es6": true,
     "browser": true,
     "mootools/core": true,
     "mootools/more": true
   },
   "plugins": ["mootools"],
-  "extends": "eslint:recommended",
   "rules": {
     "indent": [
       "error",

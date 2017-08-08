@@ -1,0 +1,8 @@
+{
+  "browser": true,
+  "mootools": true,
+  "undef": true,
+  "esversion": 6,
+  // This option suppresses warnings about functions inside of loops.
+  "loopfunc": true
+}
