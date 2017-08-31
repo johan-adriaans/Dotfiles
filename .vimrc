@@ -73,7 +73,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_checkers = ['jshint']
 
 " ==================== delimitMate ====================
 Plugin 'Raimondi/delimitMate'
@@ -135,7 +135,6 @@ set nocursorcolumn
 set nocursorline
 syntax sync minlines=256
 set synmaxcol=300
-set re=1
 augroup vimrc
   autocmd!
   autocmd BufWinEnter,Syntax * syn sync minlines=500 maxlines=500
