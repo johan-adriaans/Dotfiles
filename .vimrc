@@ -177,7 +177,7 @@ map <Leader>v :vs ~/.vimrc<CR>
 map <Leader>V :source ~/.vimrc<CR>
 
 "" Colorscheme
-colorscheme gruvbox
+silent! colorscheme gruvbox
 set background=dark
 "highlight Normal ctermbg=none
 
