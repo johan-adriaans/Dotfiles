@@ -133,12 +133,6 @@ imap <s-tab> <C-x><C-o>
 " Speed up syntax highlighting for big files
 set nocursorcolumn
 set nocursorline
-syntax sync minlines=256
-set synmaxcol=300
-augroup vimrc
-  autocmd!
-  autocmd BufWinEnter,Syntax * syn sync minlines=500 maxlines=500
-augroup END
 
 "" Pretty wrap indent
 if exists("&breakindent")
