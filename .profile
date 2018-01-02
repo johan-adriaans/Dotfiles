@@ -184,5 +184,4 @@ if [ "$(hostname)" == "frits" ]; then
   [[ $TERM != screen* ]] && [[ $TERM != dumb ]] && [[ $TERM != vt* ]] && exec tmux -2 attach
 fi
 
-
 export PATH="$HOME/.cargo/bin:$PATH"
