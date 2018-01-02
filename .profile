@@ -119,7 +119,7 @@ else # OSX
 
   export HOMEBREW_GITHUB_API_TOKEN="d9a44a49a51967cca6468aecfb7bc9da7654a5fb"
   export PATH
-  PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+  PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:$PATH"
 
   # Pretty ls (both coreutils and darwin version)
   # shellcheck disable=SC2015
