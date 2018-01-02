@@ -18,6 +18,7 @@ export GIT_PS1_SHOWCOLORHINTS=1
 export GIT_PS1_SHOWDIRTYSTATE=1
 
 # Load git prompt support
+# shellcheck disable=SC1090
 . "$DIR/git-prompt.sh"
 
 # Set bash to vi command line editing
@@ -37,12 +38,13 @@ fi
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-    alias vim-git-log='git log -p -40 | vim - -R -c "set foldmethod=syntax"'
+  # shellcheck disable=SC2015
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias ls='ls --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+  alias vim-git-log='git log -p -40 | vim - -R -c "set foldmethod=syntax"'
 fi
 
 # some more ls aliases
@@ -112,27 +114,29 @@ else # OSX
   export PATH=$HOME/android/sdk/tools:$HOME/android/sdk/platform-tools:/opt/local/bin:/opt/local/sbin:/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH
 
   # SSH hosts in ~/.ssh/config autocomplete
+  # shellcheck disable=SC2016,SC2086
   complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh
 
   export HOMEBREW_GITHUB_API_TOKEN="d9a44a49a51967cca6468aecfb7bc9da7654a5fb"
   export PATH
-  PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+  PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:$PATH"
 
   # Pretty ls (both coreutils and darwin version)
+  # shellcheck disable=SC2015
   ls --color=auto &> /dev/null && alias ls='ls --color=auto' || alias ls='ls -G'
 fi
 
 # Trim working dir to 1/4 the screen width
 function prompt_workingdir () {
-  local pwdmaxlen=$(($COLUMNS/4))
+  local pwdmaxlen=$((COLUMNS/4))
   local trunc_symbol="..."
   if [[ $PWD == $HOME* ]]; then
-    newPWD="~${PWD#$HOME}" 
+    newPWD="~${PWD#$HOME}"
   else
     newPWD=${PWD}
   fi
   if [ ${#newPWD} -gt $pwdmaxlen ]; then
-    local pwdoffset=$(( ${#newPWD} - $pwdmaxlen + 3 ))
+    local pwdoffset=$(( ${#newPWD} - pwdmaxlen + 3 ))
     newPWD="${trunc_symbol}${newPWD:$pwdoffset:$pwdmaxlen}"
   fi
   echo "$newPWD"
@@ -154,14 +158,19 @@ fi
 unset color_prompt
 
 # Fix the bash prompt to the first column - http://jonisalonen.com/2012/your-bash-prompt-needs-this/
-PS1="\[\033[G\]$PS1" 
+PS1="\[\033[G\]$PS1"
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+# shellcheck disable=SC1091
     . /etc/bash_completion
 fi
+
+# OSX bash completion
+# shellcheck disable=SC1091
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
 # Set gpg-agent as ssh-agent
 if [ -z "$SSH_AUTH_SOCK" ] || [[ "$SSH_AUTH_SOCK" = *com.apple.launchd* ]]; then
@@ -173,7 +182,7 @@ fi
 
 # Fix SSH auth socket location so agent forwarding works with tmux
 if test "$SSH_AUTH_SOCK" && [[ $SSH_AUTH_SOCK != "$HOME/.ssh/ssh_auth_sock" ]]; then
-  ln -sf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
+  ln -sf "$SSH_AUTH_SOCK" "$HOME/.ssh/ssh_auth_sock"
 fi
 if [ -e ~/.ssh/ssh_auth_sock ]; then
   export SSH_AUTH_SOCK="$HOME/.ssh/ssh_auth_sock"
