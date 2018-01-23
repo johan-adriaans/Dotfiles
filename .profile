@@ -22,7 +22,7 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 . "$DIR/git-prompt.sh"
 
 # Set bash to vi command line editing
-set -o vi
+# set -o vi
 
 # Cache $DISPLAY value so we can use it later (X11 forwards)
 if [ -z "$STY" ] && [ -z "$TMUX" ]; then

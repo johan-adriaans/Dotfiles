@@ -1,0 +1,3 @@
+- Install php-codesniffer
+- Copy IZI dir to /usr/share/php/PHP/CodeSniffer/Standards
+- Set default standard with: phpcs --config-set default_standard IZI
