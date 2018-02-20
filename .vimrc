@@ -176,6 +176,9 @@ map <Leader>s :%s/\s\+$//g<CR>:%s/\t/  /g<CR>
 map <Leader>v :vs ~/.vimrc<CR>
 map <Leader>V :source ~/.vimrc<CR>
 
+"" Map - (minus) to explore. Minus in explore is one level up, this feels natural
+map - :Explore<CR>
+
 "" Colorscheme
 silent! colorscheme gruvbox
 set background=dark

@@ -33,8 +33,8 @@ else
 fi
 
 # Shiny colors
-[[ $TERM == screen* ]] && export TERM=screen-256color
-[[ $TERM == xterm* ]] && export TERM=xterm-256color
+#[[ $TERM == screen* ]] && export TERM=screen-256color
+#[[ $TERM == xterm* ]] && export TERM=xterm-256color
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -54,11 +54,11 @@ alias l='ls -CF'
 alias weather='curl http://wttr.in/utrecht'
 
 # Force xterm-color on ssh sessions
-alias ssh='TERM=xterm-color LC_NO_TMUX=1 ssh'
+alias ssh='LC_NO_TMUX=1 ssh'
 alias vi='DISPLAY= vim' # Disable X11 mouse support
 alias vim='DISPLAY= vim' # Disable X11 mouse support
-alias irssi='TERM=screen-256color irssi'
-alias nagcon='TERM=screen-256color sudo nagcon -f /var/cache/nagios3/status.dat'
+alias irssi='irssi'
+alias nagcon='sudo nagcon -f /var/cache/nagios3/status.dat'
 alias alpine='alpine -p "{kantoor.izi-services.nl:993/user=johan/ssl}remote_pinerc"'
 
 # My locale settings
