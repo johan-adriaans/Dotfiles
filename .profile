@@ -1,28 +1,9 @@
 #!/usr/bin/env bash
-# If not running interactively, don't do anything
+# If not running interactively, don't do anything (for sh compatability)
 [ -z "$PS1" ] && return
 
 # Set my umask
 umask 0002
-
-# Find Dotfiles folder
-SOURCE="${BASH_SOURCE[0]}"
-while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
-  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-  SOURCE="$(readlink "$SOURCE")"
-  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
-done
-DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-
-export GIT_PS1_SHOWCOLORHINTS=1
-export GIT_PS1_SHOWDIRTYSTATE=1
-
-# Load git prompt support
-# shellcheck disable=SC1090
-. "$DIR/git-prompt.sh"
-
-# Set bash to vi command line editing
-# set -o vi
 
 # Cache $DISPLAY value so we can use it later (X11 forwards)
 if [ -z "$STY" ] && [ -z "$TMUX" ]; then
@@ -31,10 +12,6 @@ else
   export DISPLAY
   DISPLAY=$(cat ~/.display.txt)
 fi
-
-# Shiny colors
-#[[ $TERM == screen* ]] && export TERM=screen-256color
-#[[ $TERM == xterm* ]] && export TERM=xterm-256color
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -89,20 +66,34 @@ shopt -s checkwinsize
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Define path for GO
-export GOPATH=~/source/go
+if [ -d "$HOME/source/go" ] ; then
+  export GOPATH="$HOME/source/go"
+fi
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$HOME/bin/arm-toolchain/bin:$HOME/source/go/bin:$PATH"
+  PATH="$HOME/bin:$HOME/bin/arm-toolchain/bin:$HOME/source/go/bin:$PATH"
 fi
 
 # Node path settings
-export PATH=$HOME/local/node/bin:/usr/local/share/npm/bin:$PATH
-export NODE_PATH=$HOME/local/node:$HOME/local/node/lib/node_modules
+if [ -d "$HOME/local/node" ]; then
+  export PATH="$HOME/local/node/bin:/usr/local/share/npm/bin:$PATH"
+  export NODE_PATH="$HOME/local/node:$HOME/local/node/lib/node_modules"
+fi
 
 # Android SDK settings
-export ANDROID_HOME="$HOME/share/adt-bundle"
-export PATH=${PATH}:$HOME/share/adt-bundle/tools:$HOME/share/adt-bundle/platform-tools
+if [ -d "$HOME/share/adt-bundle" ]; then
+  export ANDROID_HOME="$HOME/share/adt-bundle"
+  export PATH="$PATH:$HOME/share/adt-bundle/tools:$HOME/share/adt-bundle/platform-tools"
+fi
+if [ -d "$HOME/android" ]; then
+  export PATH="$HOME/android/sdk/tools:$HOME/android/sdk/platform-tools:$PATH"
+fi
+
+# Cargo path
+if [ -d "$HOME/.cargo/bin" ]; then
+  export PATH="$HOME/.cargo/bin:$PATH"
+fi
 
 # !OSX
 if [ ! -d "/Applications" ]; then
@@ -111,15 +102,13 @@ if [ ! -d "/Applications" ]; then
     shopt -s globstar
 else # OSX
   # Some OSX Specific paths
-  export PATH=$HOME/android/sdk/tools:$HOME/android/sdk/platform-tools:/opt/local/bin:/opt/local/sbin:/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH
+  export PATH="/usr/local/opt/coreutils/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH"
 
   # SSH hosts in ~/.ssh/config autocomplete
   # shellcheck disable=SC2016,SC2086
-  complete -o default -o nospace -W "$(/usr/bin/env ruby -ne 'puts $_.split(/[,\s]+/)[1..-1].reject{|host| host.match(/\*|\?/)} if $_.match(/^\s*Host\s+/);' < $HOME/.ssh/config)" scp sftp ssh
+  complete -o default -o nospace -W "$(grep '^Host ' "$HOME/.ssh/config" | cut -d' ' -f2)" scp sftp ssh
 
   export HOMEBREW_GITHUB_API_TOKEN="d9a44a49a51967cca6468aecfb7bc9da7654a5fb"
-  export PATH
-  PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:$PATH"
 
   # Pretty ls (both coreutils and darwin version)
   # shellcheck disable=SC2015
@@ -188,9 +177,6 @@ if [ -e ~/.ssh/ssh_auth_sock ]; then
   export SSH_AUTH_SOCK="$HOME/.ssh/ssh_auth_sock"
 fi
 
-# Start tmux if not in dumb terminal and on frits
-if [ "$(hostname)" == "frits" ]; then
-  [[ $TERM != screen* ]] && [[ $TERM != dumb ]] && [[ $TERM != vt* ]] && exec tmux -2 attach
-fi
+# Start tmux if not in dumb terminal
+[[ $TERM != screen* ]] && [[ $TERM != dumb ]] && [[ $TERM != vt* ]] && exec tmux -2 attach
 
-export PATH="$HOME/.cargo/bin:$PATH"
