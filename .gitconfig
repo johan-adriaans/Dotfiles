@@ -9,6 +9,6 @@
   stat=status
   co=checkout
 [commit]
-	gpgsign = true
+	gpgsign = false
 [gpg]
-	program = /usr/local/bin/gpg2
+	program = /usr/bin/gpg2

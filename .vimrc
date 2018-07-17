@@ -8,13 +8,17 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'L9'
 
 " ===================== PHPDOC =======================
-Plugin 'mudpile45/vim-phpdoc'       " shift-K in normal mode)
+Plugin 'mudpile45/vim-phpdoc'       " shift-K in normal mode
 
 " =============== Autocomplete pupop =================
 "Plugin 'othree/vim-autocomplpop'
 
 " ====================== JS ==========================
 Plugin 'pangloss/vim-javascript'
+
+" ================= VIM SURROUND =====================
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
 
 " ================ PHP doc comments ==================
 Plugin 'sumpygump/php-documentor-vim'
@@ -27,9 +31,6 @@ let g:pdv_cfg_Author = "Johan Adriaans <johan@izi-services.nl>"
 let g:pdv_cfg_Copyright = "Copyright (C) Shoppagina - All Rights Reserved"
 let g:pdv_cfg_License = "Proprietary and confidential"
 let g:pdv_cfg_ClassTags = ["package","author","copyright","license","version"]
-
-" =========== Seamless Tmux integration ==============
-Plugin 'christoomey/vim-tmux-navigator'
 
 " ==================== LESS ==========================
 Plugin 'groenewege/vim-less'
@@ -127,8 +128,8 @@ set ssop-=options                   " do not store global and local values in a 
 set ssop-=folds                     " do not store folds
 
 " Map tab to ctrl-n and s-tab to code-intel version
-imap <tab> <C-n>
-imap <s-tab> <C-x><C-o>
+imap <tab> <C-x><C-o>
+imap <s-tab> <C-n>
 
 " Speed up syntax highlighting for big files
 set nocursorcolumn
@@ -175,8 +176,12 @@ map <Leader>x :silent 1,$!xmllint --format --recover - 2>/dev/null<CR>
 "" Toggle tag bar
 map <Leader>t :TagbarToggle<CR>
 
-"" Remove trailing spaces
-map <Leader>s :%s/\s\+$//g<CR>:%s/\t/  /g<CR>
+"" Remove trailing spaces and replace tabs
+map <silent> <Leader>s ms:%s/\s\+$//g <bar> :%s/\t/  /g<CR>`s
+
+"" Open file with path absolute to project root enclosed in " (Yeah, a bit
+"" specific, I know. Let's see if I use it and then improve ;)
+map <Leader>f T"lvt"gf
 
 "" Edit vimrc
 map <Leader>v :vs ~/.vimrc<CR>
