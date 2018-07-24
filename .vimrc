@@ -128,8 +128,8 @@ set ssop-=options                   " do not store global and local values in a 
 set ssop-=folds                     " do not store folds
 
 " Map tab to ctrl-n and s-tab to code-intel version
-imap <tab> <C-x><C-o>
-imap <s-tab> <C-n>
+imap <s-tab> <C-x><C-o>
+imap <tab> <C-n>
 
 " Speed up syntax highlighting for big files
 set nocursorcolumn
