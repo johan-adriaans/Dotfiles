@@ -136,13 +136,31 @@ case "$TERM" in
     *color) color_prompt=yes;;
 esac
 
+# My own __git_ps1, barebones but very fast
+function __git_ps1 {
+  cwd="$(pwd)"
+  while true; do
+    if [ -d "$cwd/.git" ]; then
+      branch="$(basename "$(cat "$cwd/.git/HEAD")")"
+      test ${#branch} -gt 25 && branch=${branch:0:22}...
+      echo " ($branch)"
+      return
+    else
+      cwd=$(dirname "$cwd")
+      if [ "$cwd" = "/" ]; then
+        return
+      fi
+    fi
+  done
+}
+
 # Echo all supported colors
 #( x=`tput op` y=`printf %$((${COLUMNS}-6))s`;for i in {0..256};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done; )
 
 if [ "$color_prompt" = yes ]; then
-  PS1='\[$(tput setaf 2)\]\u@\h\[$(tput setaf 7)\]:\[$(tput bold)\]\[$(tput setaf 4)\]$(prompt_workingdir)\[$(tput sgr0)\]\[$(tput setaf 7)\]\[$(tput setaf 5)\]$(__git_ps1 " (%s)")\[$(tput setaf 7)\]\$ '
+  PS1='\[$(tput setaf 2)\]\u@\h\[$(tput setaf 7)\]:\[$(tput bold)\]\[$(tput setaf 4)\]$(prompt_workingdir)\[$(tput sgr0)\]\[$(tput setaf 7)\]\[$(tput setaf 5)\]$(__git_ps1)\[$(tput setaf 7)\]\$ '
 else
-  PS1='\u@\h:$(prompt_workingdir)$(__git_ps1 " (%s)")\$ '
+  PS1='\u@\h:$(prompt_workingdir)$(__git_ps1)\$ '
 fi
 unset color_prompt
 
