@@ -16,10 +16,6 @@ Plugin 'mudpile45/vim-phpdoc'       " shift-K in normal mode
 " ====================== JS ==========================
 Plugin 'pangloss/vim-javascript'
 
-" ================= VIM SURROUND =====================
-"Plugin 'tpope/vim-surround'
-"Plugin 'tpope/vim-repeat'
-
 " ================ PHP doc comments ==================
 Plugin 'sumpygump/php-documentor-vim'
 inoremap <C-c> <ESC>:call PhpDocSingle()<CR>i
@@ -66,7 +62,11 @@ Plugin 'fatih/vim-go'
 " ============ Gruvbox color scheme ==================
 Plugin 'morhetz/gruvbox'
 
-" ================== Syntax checking ==================
+" ======== Python style and indentation===============
+Plugin 'nvie/vim-flake8'
+Plugin 'vim-scripts/indentpython.vim'
+
+" ================= Syntax checking ==================
 Plugin 'scrooloose/syntastic'
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -77,15 +77,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 let g:syntastic_javascript_checkers = ['jshint']
 
-" ==================== delimitMate ====================
-"Plugin 'Raimondi/delimitMate'
-"let g:delimitMate_expand_cr = 1
-"let g:delimitMate_expand_space = 1
-"let g:delimitMate_smart_quotes = 1
-"let g:delimitMate_expand_inside_quotes = 0
-" let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
-
-" ===================== Arduino =======================
+" ==================== Arduino =======================
 "Plugin 'sudar/vim-arduino-syntax'
 
 call vundle#end()                   " required by Vundle. No Plugin statements below this line
@@ -150,16 +142,26 @@ if exists("&breakindent")
 endif
 
 " Omnicompletion
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType smarty set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType less set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
-autocmd FileType go set omnifunc=gocomplete#Complete
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType smarty setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType less setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+autocmd FileType c setlocal omnifunc=ccomplete#Complete
+autocmd FileType go setlocal omnifunc=gocomplete#Complete
+
+" Python PEP 8
+autocmd FileType python
+            \ setlocal tabstop=4 |
+            \ setlocal softtabstop=4 |
+            \ setlocal shiftwidth=4 |
+            \ setlocal textwidth=79 |
+            \ setlocal expandtab |
+            \ setlocal autoindent |
+            \ setlocal fileformat=unix
 
 "" Session saving
 map <silent> <F5> :mks! ~/.vim/session.vim<CR>
