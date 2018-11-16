@@ -17,8 +17,8 @@ Plugin 'mudpile45/vim-phpdoc'       " shift-K in normal mode
 Plugin 'pangloss/vim-javascript'
 
 " ================= VIM SURROUND =====================
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
+"Plugin 'tpope/vim-surround'
+"Plugin 'tpope/vim-repeat'
 
 " ================ PHP doc comments ==================
 Plugin 'sumpygump/php-documentor-vim'
@@ -44,6 +44,7 @@ let g:airline_powerline_fonts = 1
 Plugin 'kien/ctrlp.vim'
 let g:ctrlp_working_path_mode=0     " Force ctrlP to keep inital workingdir
 let g:ctrlp_extensions = ['tag']    " Let ctrlP search tags
+map <c-p> <ESC>:CtrlPMRU<CR>
 
 " ====== Track SVN/Git changes in the sidebar ========
 Plugin 'mhinz/vim-signify'
@@ -77,11 +78,11 @@ let g:syntastic_check_on_wq = 1
 let g:syntastic_javascript_checkers = ['jshint']
 
 " ==================== delimitMate ====================
-Plugin 'Raimondi/delimitMate'
-let g:delimitMate_expand_cr = 1
-let g:delimitMate_expand_space = 1
-let g:delimitMate_smart_quotes = 1
-let g:delimitMate_expand_inside_quotes = 0
+"Plugin 'Raimondi/delimitMate'
+"let g:delimitMate_expand_cr = 1
+"let g:delimitMate_expand_space = 1
+"let g:delimitMate_smart_quotes = 1
+"let g:delimitMate_expand_inside_quotes = 0
 " let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 
 " ===================== Arduino =======================
