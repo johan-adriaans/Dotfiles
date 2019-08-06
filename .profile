@@ -43,6 +43,10 @@ export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+# Editor
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
 # Make c-w recognize words
 stty werase undef
 bind '\C-w:unix-filename-rubout'
