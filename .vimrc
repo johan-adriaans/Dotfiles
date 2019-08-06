@@ -40,6 +40,7 @@ let g:airline_powerline_fonts = 1
 Plugin 'kien/ctrlp.vim'
 let g:ctrlp_working_path_mode=0     " Force ctrlP to keep inital workingdir
 let g:ctrlp_extensions = ['tag']    " Let ctrlP search tags
+map <c-p> <ESC>:CtrlPMRU<CR>
 
 " ====== Track SVN/Git changes in the sidebar ========
 Plugin 'mhinz/vim-signify'
