@@ -1,88 +1,88 @@
 set nocompatible                    " choose no compatibility with legacy vi
-filetype off                        " required by Vundle
 
-" ===================== Vundle =======================
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
-Plugin 'L9'
+call plug#begin('~/.vim/plug-bundles')
+
+" ====================== COC =========================
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_global_extensions = ['coc-html', 'coc-phpls', 'coc-css', 'coc-sql', 'coc-json', 'coc-yaml']
 
 " ===================== PHPDOC =======================
-Plugin 'mudpile45/vim-phpdoc'       " shift-K in normal mode
+Plug 'mudpile45/vim-phpdoc'       " shift-K in normal mode
 
 " =============== Autocomplete pupop =================
 "Plugin 'othree/vim-autocomplpop'
+"Plugin 'shawncplus/phpcomplete.vim'
 
 " ====================== JS ==========================
-Plugin 'pangloss/vim-javascript'
+"Plugin 'pangloss/vim-javascript'
+"Plugin 'alvan/vim-closetag'
 
 " ================ PHP doc comments ==================
-Plugin 'sumpygump/php-documentor-vim'
-inoremap <C-c> <ESC>:call PhpDocSingle()<CR>i
-nnoremap <C-c> :call PhpDocSingle()<CR>
-vnoremap <C-c> :call PhpDocRange()<CR>
-let g:pdv_cfg_Package = "IZICMS"
-let g:pdv_cfg_Version = "1.0"
-let g:pdv_cfg_Author = "Johan Adriaans <johan@izi-services.nl>"
-let g:pdv_cfg_Copyright = "Copyright (C) Shoppagina - All Rights Reserved"
-let g:pdv_cfg_License = "Proprietary and confidential"
-let g:pdv_cfg_ClassTags = ["package","author","copyright","license","version"]
+"Plugin 'sumpygump/php-documentor-vim'
+"inoremap <C-c> <ESC>:call PhpDocSingle()<CR>i
+"nnoremap <C-c> :call PhpDocSingle()<CR>
+"vnoremap <C-c> :call PhpDocRange()<CR>
+"let g:pdv_cfg_Package = "IZICMS"
+"let g:pdv_cfg_Version = "1.0"
+"let g:pdv_cfg_Author = "Johan Adriaans <johan@izi-services.nl>"
+"let g:pdv_cfg_Copyright = "Copyright (C) Shoppagina - All Rights Reserved"
+"let g:pdv_cfg_License = "Proprietary and confidential"
+"let g:pdv_cfg_ClassTags = ["package","author","copyright","license","version"]
 
 " ==================== LESS ==========================
-Plugin 'groenewege/vim-less'
+"Plugin 'groenewege/vim-less'
 
 " ================== Airline =========================
-Plugin 'bling/vim-airline'
+Plug 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 " let g:airline#extensions#tabline#enabled = 1
 
 " ========= Find files in current directory ==========
-Plugin 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
 let g:ctrlp_working_path_mode=0     " Force ctrlP to keep inital workingdir
 let g:ctrlp_extensions = ['tag']    " Let ctrlP search tags
 map <c-p> <ESC>:CtrlPMRU<CR>
 
 " ====== Track SVN/Git changes in the sidebar ========
-Plugin 'mhinz/vim-signify'
+Plug 'mhinz/vim-signify'
 
 " =============== Git fugitive =======================
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " ================== Tagbar ==========================
-Plugin 'majutsushi/tagbar'
-Plugin 'vim-php/tagbar-phpctags.vim'
+"Plugin 'majutsushi/tagbar'
+"Plugin 'vim-php/tagbar-phpctags.vim'
 
 " =============== Smarty indent ======================
-Plugin 'blueyed/smarty.vim'
+"Plug 'blueyed/smarty.vim'
 
 " ========== Go development and code intel ===========
-Plugin 'fatih/vim-go'
+"Plugin 'fatih/vim-go'
 "Plugin 'nsf/gocode', {'rtp': 'vim/'}
 
 " ============ Gruvbox color scheme ==================
-Plugin 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 
 " ======== Python style and indentation===============
-Plugin 'nvie/vim-flake8'
-Plugin 'vim-scripts/indentpython.vim'
+"Plugin 'nvie/vim-flake8'
+"Plug 'vim-scripts/indentpython.vim'
 
 " ================= Syntax checking ==================
-Plugin 'scrooloose/syntastic'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_checkers = ['jshint']
+"Plugin 'scrooloose/syntastic'
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 0
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 1
+"let g:syntastic_javascript_checkers = ['jshint']
 
 " ==================== Arduino =======================
 "Plugin 'sudar/vim-arduino-syntax'
 
-call vundle#end()                   " required by Vundle. No Plugin statements below this line
-filetype plugin indent on
-syntax enable
+" Initialize plugin system
+call plug#end()
 
 " Set font for gvim
 set guifont=Droid\ Sans\ Mono\ for\ Powerline:h14
@@ -107,11 +107,13 @@ set title                           " Set window title for gvim etc
 set scrolloff=4                     " Window scroll offset. T o keep context while scrolling
 set number                          " setting line numbers
 set splitright                      " Always open vertical splits to the right
+set splitbelow                      " Always open horizontal splits at the bottom
 
 "" Searching
 set hlsearch                        " highlight matches
 set incsearch                       " incremental searching
-set ignorecase                      " searches are case insensitive...
+"set ignorecase                      " searches are case insensitive...
+"set infercase                       " Infer match case based on keyword
 set smartcase                       " ... unless they contain at least one capital letter
 set tags=./tags;/                   " Autoload tags file
 set laststatus=2                    " Always show the statusline
@@ -120,19 +122,13 @@ set laststatus=2                    " Always show the statusline
 set ssop-=options                   " do not store global and local values in a session
 set ssop-=folds                     " do not store folds
 
-" Map tab to ctrl-n and s-tab to code-intel version
-imap <s-tab> <C-x><C-o>
-imap <tab> <C-n>
-
 " Speed up syntax highlighting for big files
 set nocursorcolumn
 set nocursorline
-"syntax sync minlines=256
-"set synmaxcol=300
-"augroup vimrc
-  "autocmd!
-  "autocmd BufWinEnter,Syntax * syn sync minlines=500 maxlines=500
-"augroup END
+
+syntax sync minlines=256
+set synmaxcol=300
+autocmd FileType html syntax sync fromstart
 
 "" Pretty wrap indent
 if exists("&breakindent")
@@ -140,6 +136,19 @@ if exists("&breakindent")
   set showbreak=\ \ ↪\              " Indentation character
   set linebreak                     " Don't break words
 endif
+
+" Map tab to ctrl-x ctrl-o for code completion and to ctrl-n/p when wildmenu
+" is visible
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-n>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-x>\<C-o>"
+
+" Complete popup
+set completeopt-=preview
+set completeopt+=menu,menuone
+set shortmess+=c
+
+" Autoclose preview after complete
+autocmd CompleteDone * pclose
 
 " Omnicompletion
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
@@ -172,6 +181,9 @@ map <Leader>p mz:silent 1,$!phpcbf<CR> gg=G`zzz
 
 "" format JSON
 map <Leader>j :%!python -m json.tool<CR>
+
+"" format HTML
+map <Leader>h :silent 1,$!tidy -i -asxhtml -omit -q -wrap 0 -file /dev/null \| grep -v 'meta name="generator" content="HTML Tidy'<CR>
 
 "" format XML
 map <Leader>x :silent 1,$!xmllint --format --recover - 2>/dev/null<CR>
