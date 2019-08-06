@@ -11,4 +11,4 @@
 [commit]
 	gpgsign = false
 [gpg]
-	program = /usr/bin/gpg2
+	program = gpg2
