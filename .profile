@@ -106,7 +106,7 @@ if [ ! -d "/Applications" ]; then
     shopt -s globstar
 else # OSX
   # Some OSX Specific paths
-  export PATH="/usr/local/opt/coreutils/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/Applications/Xcode.app/Contents/Developer/usr/bin:$PATH"
+  export PATH="/usr/local/opt/coreutils/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/Applications/Xcode.app/Contents/Developer/usr/bin:~/Library/Python/2.7/bin/:$PATH"
 
   # SSH hosts in ~/.ssh/config autocomplete
   # shellcheck disable=SC2016,SC2086
