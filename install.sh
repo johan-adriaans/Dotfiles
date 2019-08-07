@@ -24,11 +24,11 @@ for file in $(ls -1a | grep "^\.[a-z][a-z\._-]\+$" ); do
   fi
 done
 
-echo -n "Want to install all vim plugins using Vundle? (y/n): "
+echo -n "Want to install all vim plugins using PlugInstall? (y/n): "
 read response
 if [ "$response" == "y" ]
 then
   git submodule init
   git submodule update
-  vi -c 'BundleInstall|qa'
+  vi -c 'PlugInstall|qa'
 fi

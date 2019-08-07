@@ -4,7 +4,7 @@ call plug#begin('~/.vim/plug-bundles')
 
 " ====================== COC =========================
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-html', 'coc-phpls', 'coc-css', 'coc-sql', 'coc-json', 'coc-yaml']
+let g:coc_global_extensions = ['coc-html', 'coc-phpls', 'coc-css', 'coc-sql', 'coc-json', 'coc-yaml', 'coc-marketplace', 'coc-tsserver', 'coc-tabnine']
 
 " ===================== PHPDOC =======================
 Plug 'mudpile45/vim-phpdoc'       " shift-K in normal mode
