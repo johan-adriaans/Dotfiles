@@ -1,21 +1,25 @@
-set nocompatible                    " choose no compatibility with legacy vi
-
 call plug#begin('~/.vim/plug-bundles')
 
 " ====================== COC =========================
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_global_extensions = ['coc-html', 'coc-phpls', 'coc-css', 'coc-sql', 'coc-json', 'coc-yaml', 'coc-marketplace', 'coc-tsserver', 'coc-tabnine']
 
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
 " ===================== PHPDOC =======================
 Plug 'mudpile45/vim-phpdoc'       " shift-K in normal mode
-
-" =============== Autocomplete pupop =================
-"Plugin 'othree/vim-autocomplpop'
-"Plugin 'shawncplus/phpcomplete.vim'
-
-" ====================== JS ==========================
-"Plugin 'pangloss/vim-javascript'
-"Plugin 'alvan/vim-closetag'
 
 " ================ PHP doc comments ==================
 "Plugin 'sumpygump/php-documentor-vim'
@@ -35,7 +39,6 @@ Plug 'mudpile45/vim-phpdoc'       " shift-K in normal mode
 " ================== Airline =========================
 Plug 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
-" let g:airline#extensions#tabline#enabled = 1
 
 " ========= Find files in current directory ==========
 Plug 'kien/ctrlp.vim'
@@ -64,25 +67,20 @@ Plug 'tpope/vim-fugitive'
 Plug 'morhetz/gruvbox'
 
 " ======== Python style and indentation===============
-"Plugin 'nvie/vim-flake8'
+"Plug 'nvie/vim-flake8'
 "Plug 'vim-scripts/indentpython.vim'
-
-" ================= Syntax checking ==================
-"Plugin 'scrooloose/syntastic'
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 0
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 1
-"let g:syntastic_javascript_checkers = ['jshint']
 
 " ==================== Arduino =======================
 "Plugin 'sudar/vim-arduino-syntax'
 
 " Initialize plugin system
 call plug#end()
+
+set nocompatible                    " choose no compatibility with legacy vi
+set hidden                          " if hidden is not set, TextEdit might fail.
+set cmdheight=2                     " Better display for messages
+set updatetime=300                  " You will have bad experience for diagnostic
+                                    " messages when it's default 4000.
 
 " Set font for gvim
 set guifont=Droid\ Sans\ Mono\ for\ Powerline:h14
@@ -98,7 +96,8 @@ set backspace=indent,eol,start      " backspace through everything in insert mod
 set textwidth=0
 set formatoptions-=t
 set foldmethod=manual
-set shortmess=atI                   " Improve [Press ENTER to continue] prompt messages
+"set shortmess=atI                   " Improve [Press ENTER to continue] prompt messages
+set shortmess+=c
 set wrap                            " Enable line wrapping
 
 set wildmenu                        " Enable wildcard menu
@@ -137,10 +136,9 @@ if exists("&breakindent")
   set linebreak                     " Don't break words
 endif
 
-" Map tab to ctrl-x ctrl-o for code completion and to ctrl-n/p when wildmenu
-" is visible
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-n>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-x>\<C-o>"
+" Map tab to code completion and to up/down when wildmenu is visible
+inoremap <expr> <Tab> pumvisible() ? "\<down>" : "\<C-n>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<up>" : "\<C-x>"
 
 " Complete popup
 set completeopt-=preview
@@ -172,12 +170,15 @@ autocmd FileType python
             \ setlocal autoindent |
             \ setlocal fileformat=unix
 
+" Set PHP formatter
+autocmd FileType php set formatprg=phpcbf
+
 "" Session saving
 map <silent> <F5> :mks! ~/.vim/session.vim<CR>
 map <silent> <F9> :source ~/.vim/session.vim<CR>
 
 "" format PHP
-map <Leader>p mz:silent 1,$!phpcbf<CR> gg=G`zzz
+map <Leader>p mz:silent 1,$!phpcbf --standard=IZI -q -<CR> gg=G`zzz
 
 "" format JSON
 map <Leader>j :%!python -m json.tool<CR>
@@ -210,6 +211,9 @@ silent! colorscheme gruvbox
 set background=dark
 "highlight Normal ctermbg=none
 
+" Have Vim jump to the last position when reopening a file
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
 "" Highlight unwanted spaces
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
@@ -228,23 +232,12 @@ set grepprg=grep\ -nir\ $*\ *
 "" Enable matchit (Extendend % matching for html tags)
 runtime macros/matchit.vim
 
-"" Make PHP indent cases in switch statements
-let g:PHP_vintage_case_default_indent=1
-
 "" Map jj to Esc in normal mode
 imap jj <Esc>
 
 "" Allow moving up/down like you expect in a wrapped line
 nmap j gj
 nmap k gk
-
-if has("autocmd")
-  " Have Vim jump to the last position when reopening a file
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-
-  " Set PHP formatter
-  autocmd FileType php set formatprg=phpcbf
-endif
 
 " Expand %%/ to current/file/working/dir when in Ex mode
 cabbr <expr> %% expand('%:p:h')
