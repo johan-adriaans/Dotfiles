@@ -12,11 +12,66 @@ function! s:show_documentation()
   endif
 endfunction
 
+" always show signcolumns
+set signcolumn=yes
+
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" ===================== NEOFORMAT =======================
+Plug 'sbdchd/neoformat'
+
+" JS support
+" npm -g install prettier
+let neoformat_javascript_prettiercustom = {
+        \ 'exe': 'prettier',
+        \ 'args': ['--stdin',
+                 \ '--print-width 80',
+                 \ '--single-quote',
+                 \ '--end-of-line lf',
+                 \ '--stdin-filepath', '"%:p"'],
+        \ 'stdin': 1,
+        \ }
+let g:neoformat_enabled_javascript = ['prettiercustom']
+
+let neoformat_less_prettiercustom = {
+        \ 'exe': 'prettier',
+        \ 'args': ['--stdin', '--stdin-filepath', '"%:p"', '--parser', 'css', '--print-width 120', ],
+        \ 'stdin': 1
+        \ }
+let g:neoformat_enabled_css = ['prettiercustom']
+let g:neoformat_enabled_less = ['prettiercustom']
+
+" PHP support
+" pear install PHP_CodeSniffer
+" Copy IZI standards to /usr/share/php/PHP/CodeSniffer/src/Standards
+" Set IZI standards to default: phpcbf --config-set default_standard IZI
+
+" XML support
+" apt install tydy
+let g:neoformat_xml_tidycustom = {
+            \ 'exe': 'tidy',
+            \ 'args': ['-quiet',
+            \          '-xml',
+            \          '--indent auto',
+            \          '--indent-spaces 2',
+            \          '--vertical-space yes',
+            \          '--tidy-mark no',
+            \          '--indent-cdata yes',
+            \          '--wrap 0'
+            \         ],
+            \ 'stdin': 1,
+            \ }
+let g:neoformat_enabled_xml = ['tidycustom']
+
+" Run Neoformat at file save
+au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | endtry
+
+" Run Neoformat on text change for js
+"autocmd BufWritePre,TextChanged,InsertLeave *.js Neoformat
 
 " ===================== PHPDOC =======================
 Plug 'mudpile45/vim-phpdoc'       " shift-K in normal mode
@@ -52,26 +107,14 @@ Plug 'mhinz/vim-signify'
 " =============== Git fugitive =======================
 Plug 'tpope/vim-fugitive'
 
-" ================== Tagbar ==========================
-"Plugin 'majutsushi/tagbar'
-"Plugin 'vim-php/tagbar-phpctags.vim'
-
 " =============== Smarty indent ======================
 "Plug 'blueyed/smarty.vim'
-
-" ========== Go development and code intel ===========
-"Plugin 'fatih/vim-go'
-"Plugin 'nsf/gocode', {'rtp': 'vim/'}
 
 " ============ Gruvbox color scheme ==================
 Plug 'morhetz/gruvbox'
 
-" ======== Python style and indentation===============
-"Plug 'nvie/vim-flake8'
-"Plug 'vim-scripts/indentpython.vim'
-
 " ==================== Arduino =======================
-"Plugin 'sudar/vim-arduino-syntax'
+"Plug 'sudar/vim-arduino-syntax'
 
 " Initialize plugin system
 call plug#end()
@@ -96,8 +139,7 @@ set backspace=indent,eol,start      " backspace through everything in insert mod
 set textwidth=0
 set formatoptions-=t
 set foldmethod=manual
-"set shortmess=atI                   " Improve [Press ENTER to continue] prompt messages
-set shortmess+=c
+set shortmess=atI                   " Improve [Press ENTER to continue] prompt messages
 set wrap                            " Enable line wrapping
 
 set wildmenu                        " Enable wildcard menu
@@ -128,6 +170,7 @@ set nocursorline
 syntax sync minlines=256
 set synmaxcol=300
 autocmd FileType html syntax sync fromstart
+autocmd FileType xml syntax sync fromstart
 
 "" Pretty wrap indent
 if exists("&breakindent")
