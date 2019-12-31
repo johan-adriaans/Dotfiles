@@ -2,7 +2,7 @@ call plug#begin('~/.vim/plug-bundles')
 
 " ====================== COC =========================
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-html', 'coc-phpls', 'coc-css', 'coc-sql', 'coc-json', 'coc-yaml', 'coc-marketplace', 'coc-tsserver', 'coc-tabnine']
+let g:coc_global_extensions = ['coc-html', 'coc-phpls', 'coc-css', 'coc-sql', 'coc-json', 'coc-yaml', 'coc-marketplace', 'coc-tsserver']
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -120,7 +120,7 @@ Plug 'morhetz/gruvbox'
 call plug#end()
 
 set nocompatible                    " choose no compatibility with legacy vi
-set hidden                          " if hidden is not set, TextEdit might fail.
+" set hidden                          " if hidden is not set, TextEdit might fail.
 set cmdheight=2                     " Better display for messages
 set updatetime=300                  " You will have bad experience for diagnostic
                                     " messages when it's default 4000.
@@ -169,8 +169,10 @@ set nocursorline
 
 syntax sync minlines=256
 set synmaxcol=300
+
 autocmd FileType html syntax sync fromstart
 autocmd FileType xml syntax sync fromstart
+autocmd FileType tpl syntax sync fromstart
 
 "" Pretty wrap indent
 if exists("&breakindent")
