@@ -51,7 +51,7 @@ let g:neoformat_enabled_less = ['prettiercustom']
 " Set IZI standards to default: phpcbf --config-set default_standard IZI
 
 " XML support
-" apt install tydy
+" apt install tidy
 let g:neoformat_xml_tidycustom = {
             \ 'exe': 'tidy',
             \ 'args': ['-quiet',
