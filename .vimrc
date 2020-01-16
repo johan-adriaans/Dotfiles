@@ -2,7 +2,7 @@ call plug#begin('~/.vim/plug-bundles')
 
 " ====================== COC =========================
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-html', 'coc-phpls', 'coc-css', 'coc-sql', 'coc-json', 'coc-yaml', 'coc-marketplace', 'coc-tsserver']
+let g:coc_global_extensions = ['coc-html', 'coc-phpls', 'coc-css', 'coc-tsserver']
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -17,6 +17,12 @@ set signcolumn=yes
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+" To make <CR> auto-select the first completion item and notify coc.nvim to format on enter
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+		\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+nmap <c-]> <Plug>(coc-declaration)
 
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
