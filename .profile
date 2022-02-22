@@ -112,7 +112,7 @@ else # OSX
   # shellcheck disable=SC2016,SC2086
   complete -o default -o nospace -W "$(grep '^Host ' "$HOME/.ssh/config" | cut -d' ' -f2)" scp sftp ssh
 
-  export HOMEBREW_GITHUB_API_TOKEN="d9a44a49a51967cca6468aecfb7bc9da7654a5fb"
+  export HOMEBREW_GITHUB_API_TOKEN="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"
 
   # Pretty ls (both coreutils and darwin version)
   # shellcheck disable=SC2015
@@ -200,5 +200,5 @@ if [ -e ~/.ssh/ssh_auth_sock ]; then
 fi
 
 # Start tmux if not in dumb terminal
-[[ $TERM != screen* ]] && [[ $TERM != dumb ]] && [[ $TERM != vt* ]] && exec tmux -2 attach
+[[ $TERM != screen* ]] && [[ $TERM != dumb ]] && [[ $TERM != vt* ]] && [[ $TERM_PROGRAM != vscode ]] && exec tmux -2 attach
 

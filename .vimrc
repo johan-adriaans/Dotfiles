@@ -68,7 +68,7 @@ let g:neoformat_xml_tidycustom = {
 let g:neoformat_enabled_xml = ['tidycustom']
 
 " Run Neoformat at file save
-au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | endtry
+" au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | endtry
 
 " Run Neoformat on text change for js
 "autocmd BufWritePre,TextChanged,InsertLeave *.js Neoformat
@@ -168,7 +168,7 @@ set nocursorcolumn
 set nocursorline
 
 syntax sync minlines=256
-set synmaxcol=300
+set synmaxcol=3000
 autocmd FileType html syntax sync fromstart
 autocmd FileType xml syntax sync fromstart
 
