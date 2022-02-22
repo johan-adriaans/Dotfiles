@@ -112,7 +112,7 @@ else # OSX
   # shellcheck disable=SC2016,SC2086
   complete -o default -o nospace -W "$(grep '^Host ' "$HOME/.ssh/config" | cut -d' ' -f2)" scp sftp ssh
 
-  export HOMEBREW_GITHUB_API_TOKEN="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"
+  # export HOMEBREW_GITHUB_API_TOKEN=""
 
   # Pretty ls (both coreutils and darwin version)
   # shellcheck disable=SC2015
