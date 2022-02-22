@@ -2,3 +2,4 @@
 .netrwhist
 session.vim
 .vim/plug-bundles
+.vim/coc-settings.json
