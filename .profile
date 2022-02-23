@@ -21,7 +21,6 @@ if [ -x /usr/bin/dircolors ]; then
   alias grep='grep --color=auto'
   alias fgrep='fgrep --color=auto'
   alias egrep='egrep --color=auto'
-  alias vim-git-log='git log -p -40 | vim - -R -c "set foldmethod=syntax"'
 fi
 
 # some more ls aliases
@@ -29,6 +28,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias weather='curl http://wttr.in/utrecht'
+alias vim-git-log='git log -p -40 | vim - -R -c "set foldmethod=syntax"'
 
 # Force xterm-color on ssh sessions
 alias ssh='LC_NO_TMUX=1 ssh'
@@ -36,7 +36,11 @@ alias vi='DISPLAY= vim' # Disable X11 mouse support
 alias vim='DISPLAY= vim' # Disable X11 mouse support
 alias irssi='irssi'
 alias nagcon='sudo nagcon -f /var/cache/nagios3/status.dat'
-alias alpine='alpine -p "{kantoor.izi-services.nl:993/user=johan/ssl}remote_pinerc"'
+
+# Some kitty specific aliases
+if [ $TERM == 'xterm kitty' ]; then
+  alias ssh='kitty +kitten ssh'
+fi
 
 # My locale settings
 export LANGUAGE=en_US.UTF-8
@@ -138,6 +142,7 @@ function prompt_workingdir () {
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     *color) color_prompt=yes;;
+    *kitty) color_prompt=yes;;
 esac
 
 # My own __git_ps1, barebones but very fast
@@ -199,6 +204,6 @@ if [ -e ~/.ssh/ssh_auth_sock ]; then
   export SSH_AUTH_SOCK="$HOME/.ssh/ssh_auth_sock"
 fi
 
-# Start tmux if not in dumb terminal
-[[ $TERM != screen* ]] && [[ $TERM != dumb ]] && [[ $TERM != vt* ]] && [[ $TERM_PROGRAM != vscode ]] && exec tmux -2 attach
+# Start tmux if not in dumb terminal of kitty
+[[ $TERM != screen* ]] && [[ $TERM != dumb ]] && [[ $TERM != xterm-kitty ]] && [[ $TERM != vt* ]] && [[ $TERM_PROGRAM != vscode ]] && exec tmux -2 attach
 
