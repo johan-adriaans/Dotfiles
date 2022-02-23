@@ -38,7 +38,7 @@ alias irssi='irssi'
 alias nagcon='sudo nagcon -f /var/cache/nagios3/status.dat'
 
 # Some kitty specific aliases
-if [ $TERM == 'xterm kitty' ]; then
+if [ $TERM == 'xterm-kitty' ]; then
   alias ssh='kitty +kitten ssh'
 fi
 
