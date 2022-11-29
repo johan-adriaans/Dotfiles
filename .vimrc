@@ -20,7 +20,7 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 " To make <CR> auto-select the first completion item and notify coc.nvim to format on enter
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-		\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+  \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 nmap <c-]> <Plug>(coc-declaration)
 
@@ -81,6 +81,9 @@ let g:neoformat_enabled_xml = ['tidycustom']
 
 " ===================== PHPDOC =======================
 Plug 'mudpile45/vim-phpdoc'       " shift-K in normal mode
+
+" ======================= NIX ========================
+Plug 'LnL7/vim-nix'
 
 " ================ PHP doc comments ==================
 "Plugin 'sumpygump/php-documentor-vim'
